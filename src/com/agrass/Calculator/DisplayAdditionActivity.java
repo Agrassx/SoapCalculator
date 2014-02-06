@@ -9,11 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-/**
- * Created by Agrass on 06.02.14.
- */
 public class DisplayAdditionActivity extends Activity {
 
+    public final static String example = "com.agrass.Calculator";
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -39,8 +37,9 @@ public class DisplayAdditionActivity extends Activity {
 
             String ans = (editText1+" x "+editText3);
 
-            //intent.putExtra(EXTRA_MESSAGE, ans);
-            startActivity(intent);
+            intent.putExtra(example, ans);
+            setResult(RESULT_OK, intent);
+            finish();
         }
 
 }
