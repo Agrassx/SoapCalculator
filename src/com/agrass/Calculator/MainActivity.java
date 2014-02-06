@@ -74,13 +74,22 @@ public class MainActivity extends Activity {
         public void add(View view) {
 
             Intent intent = new Intent(this, DisplayAdditionActivity.class);
-            startActivityForResult();
+            startActivityForResult(intent, 1);
             Intent int_ent = getIntent();
             //String ans = int_ent.getStringExtra(DisplayAdditionActivity.example);
 
+            //TextView textView = (TextView) findViewById(R.id.textView1);
+            //textView.setTextSize(40);
+            //textView.setText("");
+        }
+
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
             TextView textView = (TextView) findViewById(R.id.textView1);
-            textView.setTextSize(40);
-            textView.setText("33");
+            if (data == null) { return; }
+            String ans = data.getStringExtra("Answer");
+            //oil.add(0, editText.getText().toString());
+            textView.setText(ans);
         }
 
     }

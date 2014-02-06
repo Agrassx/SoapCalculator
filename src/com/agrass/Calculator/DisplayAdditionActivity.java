@@ -37,6 +37,7 @@ public class DisplayAdditionActivity extends Activity {
 
             String ans = (editText1+" x "+editText3);
 
+            intent.putExtra("Answer", ans);
             intent.putExtra(example, ans);
             setResult(RESULT_OK, intent);
             finish();
