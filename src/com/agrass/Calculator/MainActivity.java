@@ -87,9 +87,13 @@ public class MainActivity extends Activity {
 
             TextView textView = (TextView) findViewById(R.id.textView1);
             if (data == null) { return; }
-            String ans = data.getStringExtra("Answer");
+            final String ans;
+            ans = data.getStringExtra("Answer");
             //oil.add(0, editText.getText().toString());
-            textView.setText(ans);
+            ArrayAdapter<String> adapterEdit= (ArrayAdapter<String>) listView.getAdapter();
+            adapterEdit.add(ans);
+            adapterEdit.notifyDataSetChanged();
+            //textView.setText(ans);
         }
 
     }
