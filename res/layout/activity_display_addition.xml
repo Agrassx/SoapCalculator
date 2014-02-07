@@ -3,44 +3,41 @@
                 android:layout_height="match_parent" >
 
     <EditText
-            android:id="@+id/editText_Multiplier_First"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="39dp"
-            android:ems="10"
-            android:inputType="numberDecimal" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
             android:id="@+id/editText_Multiplier_Second"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editText1"
-            android:layout_below="@+id/editText1"
-            android:layout_marginTop="41dp"
             android:ems="10"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:layout_alignParentTop="true" android:layout_alignParentStart="true"
+            android:layout_marginTop="73dp"/>
+    <EditText
+            android:id="@+id/editText_Multiplier_First"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:layout_gravity="center_vertical"
+            android:layout_below="@+id/textView1" android:layout_alignParentStart="true"
+            android:layout_marginTop="34dp">
 
+        <requestFocus />
+    </EditText>
     <Button
             android:id="@+id/button_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add"
-            android:onClick="buttonAdd" android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+            android:onClick="buttonAdd"
+            android:layout_alignParentBottom="true" android:layout_alignParentEnd="true"/>
 
     <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/button_add"
-            android:layout_below="@+id/editText1"
-            android:layout_marginTop="22dp"
             android:text="X"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginRight="97dp"
+            android:layout_marginTop="39dp" android:layout_below="@+id/editText_Multiplier_Second"
+            android:layout_alignEnd="@+id/editText_Multiplier_First"/>
 
 </RelativeLayout>

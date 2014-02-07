@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Agrass on 06.02.14.
@@ -20,8 +21,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
-        public ListItem[] oils;
-        ListView listView ;
+        ListView listView;
 
 
         @Override
@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 
             listView = (ListView) findViewById(R.id.listView1);
 
-            final ArrayList<ListItem> oil = new ArrayList<ListItem>();
+            final ArrayList<Float[]> oil = new ArrayList<Float[]>();
 
             final ArrayList<String> stringOil = new ArrayList<String>();
 
@@ -42,10 +42,27 @@ public class MainActivity extends Activity {
 
 
 
-
         }
 
         public void solve(View view) {
+
+            TextView textview_answer = (TextView) findViewById(R.id.textView);
+
+            float sum = 0;
+
+            for (int i = 0; i < listView.getCount(); i++) {
+
+                String[] item = listView.getAdapter().getItem(i).toString().split(" x ");
+                Float item_float1 = Float.valueOf(item[0]);
+                Float item_float2 = Float.valueOf(item[1]);
+                Float ItemEnd = item_float1 * item_float2;
+                sum += ItemEnd;
+
+            }
+
+
+            textview_answer.setText(Float.toString(sum));
+
 
             /*float answer_float;
 
@@ -70,6 +87,8 @@ public class MainActivity extends Activity {
 
             }*/
 
+
+
         }
 
         public void add(View view) {
@@ -88,16 +107,14 @@ public class MainActivity extends Activity {
             TextView textView = (TextView) findViewById(R.id.textView1);
             if (data == null) { return; }
 
-            final String ans;
-
             //ans = data.getStringExtra("Answer");
             ListItem th = new ListItem(data.getFloatArrayExtra("floatOil"));
 
             ArrayAdapter<String> adapterEdit = (ArrayAdapter<String>) listView.getAdapter();
+
             adapterEdit.add(th.toString());
             adapterEdit.notifyDataSetChanged();
         }
 
 
-    }
-
+}

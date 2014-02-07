@@ -35,9 +35,12 @@ public class DisplayAdditionActivity extends Activity {
             float multiplier_first = Float.valueOf(editTextMultiplierFirst.getText().toString());
             float multiplier_second = Float.valueOf(editTextMultiplierSecond.getText().toString());
 
-            float[] ans = {multiplier_first, multiplier_second};
+            float[] floatOil = {multiplier_first, multiplier_second};
 
-            intent.putExtra("floatOil", ans);
+            String ans = StringMultiplierFirst+" x "+StringMultiplierSecond;
+
+            intent.putExtra("floatOil", floatOil);
+            //intent.putExtra("ans",ans);
             setResult(RESULT_OK, intent);
             finish();
         }
