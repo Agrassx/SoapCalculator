@@ -9,7 +9,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.*;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -20,22 +20,23 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
-
+        public ListItem[] oils;
         ListView listView ;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
-
-            final EditText edt = (EditText) findViewById(R.id.Multiplier_First);
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.main);
 
             listView = (ListView) findViewById(R.id.listView1);
 
-            final ArrayList<String> oil = new ArrayList<String>();
+            final ArrayList<ListItem> oil = new ArrayList<ListItem>();
 
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, oil);
+            final ArrayList<String> stringOil = new ArrayList<String>();
+
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stringOil);
 
             listView.setAdapter(adapter);
 
@@ -46,7 +47,7 @@ public class MainActivity extends Activity {
 
         public void solve(View view) {
 
-            float answer_float;
+            /*float answer_float;
 
             TextView textview_answer = (TextView) findViewById(R.id.TextView_Answer);
             EditText edt = (EditText) findViewById(R.id.Multiplier_First);
@@ -67,7 +68,7 @@ public class MainActivity extends Activity {
                 textview_answer.setTextSize(40);
                 textview_answer.setText(answer_string);
 
-            }
+            }*/
 
         }
 
@@ -77,7 +78,6 @@ public class MainActivity extends Activity {
             startActivityForResult(intent, 1);
             Intent int_ent = getIntent();
             //String ans = int_ent.getStringExtra(DisplayAdditionActivity.example);
-
             //TextView textView = (TextView) findViewById(R.id.textView1);
             //textView.setTextSize(40);
             //textView.setText("");
@@ -87,14 +87,17 @@ public class MainActivity extends Activity {
 
             TextView textView = (TextView) findViewById(R.id.textView1);
             if (data == null) { return; }
+
             final String ans;
-            ans = data.getStringExtra("Answer");
-            //oil.add(0, editText.getText().toString());
-            ArrayAdapter<String> adapterEdit= (ArrayAdapter<String>) listView.getAdapter();
-            adapterEdit.add(ans);
+
+            //ans = data.getStringExtra("Answer");
+            ListItem th = new ListItem(data.getFloatArrayExtra("floatOil"));
+
+            ArrayAdapter<String> adapterEdit = (ArrayAdapter<String>) listView.getAdapter();
+            adapterEdit.add(th.toString());
             adapterEdit.notifyDataSetChanged();
-            //textView.setText(ans);
         }
+
 
     }
 
