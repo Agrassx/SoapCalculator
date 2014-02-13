@@ -1,41 +1,56 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".MainActivity" >
-
-    <Button
-            android:id="@+id/Add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="add"
-            android:text="@string/button_add"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"/>
-
-    <Button
-            android:id="@+id/solve"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="solve"
-            android:text="@string/button_solve"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/Add"/>
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                tools:context=".MainActivity"
+                android:orientation="vertical"
+                android:weightSum="1">
 
     <ListView
             android:id="@+id/listView1"
             android:layout_width="wrap_content"
-            android:layout_height="450dp"
+            android:layout_height="50dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="false"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="false"
+            android:layout_weight="0.92">
 
     </ListView>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/textView" android:layout_alignParentBottom="true" android:layout_alignParentStart="true"/>
 
-</RelativeLayout>
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_marginTop="15dp">
+        <Button
+                android:id="@+id/Add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="add"
+                android:text="@string/button_add"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"/>
+
+        <Button
+                android:id="@+id/solve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:onClick="solve"
+                android:text="@string/button_solve"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/Add"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginLeft="100dp"
+                android:text="@string/answer"
+                android:id="@+id/textView"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>

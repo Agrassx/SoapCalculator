@@ -1,47 +1,40 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
-    <EditText
-            android:id="@+id/editText_Multiplier_Second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:layout_alignParentTop="true" android:layout_alignParentStart="true"
-            android:layout_marginTop="73dp"/>
-    <EditText
-            android:id="@+id/editText_Multiplier_First"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:layout_gravity="center_vertical"
-            android:layout_below="@+id/textView1" android:layout_alignParentStart="true"
-            android:layout_marginTop="34dp">
-
-        <requestFocus />
-    </EditText>
-    <Button
-            android:id="@+id/button_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"
-            android:onClick="buttonAdd"
-            android:layout_alignParentBottom="true" android:layout_alignParentEnd="true"/>
-
-    <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="X"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginRight="97dp"
-            android:layout_marginTop="39dp" android:layout_below="@+id/editText_Multiplier_Second"
-            android:layout_alignEnd="@+id/editText_Multiplier_First"/>
     <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner" android:layout_alignParentTop="true" android:layout_alignParentStart="true"/>
+            android:id="@+id/spinner"
+            android:layout_alignParentStart="true"/>
 
-</RelativeLayout>
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_gravity="bottom">
+
+        <EditText
+                android:id="@+id/editText_Multiplier_First"
+                android:layout_width="133dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="1dp"
+                android:layout_alignParentStart="false"
+                android:text="">
+            <requestFocus />
+        </EditText>
+
+        <Button
+                android:id="@+id/button_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ButtonAdd"
+                android:onClick="buttonAdd"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

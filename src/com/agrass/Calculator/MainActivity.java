@@ -4,6 +4,7 @@ package com.agrass.Calculator;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import java.util.ArrayList;
@@ -11,10 +12,14 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
 
         ListView listView;
+        ArrayAdapter<String> adapter;
+        ArrayList<String> test = new ArrayList<String>();
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+            Log.e("","OnCreate");
 
             setContentView(R.layout.main);
 
@@ -22,11 +27,9 @@ public class MainActivity extends Activity {
 
             ArrayList<String> stringOil = new ArrayList<String>();
 
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stringOil);
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, test);
 
             listView.setAdapter(adapter);
-
-
 
         }
 
@@ -35,45 +38,35 @@ public class MainActivity extends Activity {
             TextView textview_answer = (TextView) findViewById(R.id.textView);
 
             float sum = 0;
+//            float[] percent = new float[2];
+//            int length = listView.getCount();
+//            float[] per = new float[length];
+//            String[] stringPer = new String[length];
 
             for (int i = 0; i < listView.getCount(); i++) {
 
-                String[] item = listView.getAdapter().getItem(i).toString().split(" x ");
-                Float item_float1 = Float.valueOf(item[0]);
+                String[] item = listView.getAdapter().getItem(i).toString().split(" - ");
                 Float item_float2 = Float.valueOf(item[1]);
-                Float ItemEnd = item_float1 * item_float2;
-                sum += ItemEnd;
+
+                sum += item_float2;
 
             }
 
+            for (int i = 0; i < listView.getCount(); i++) {
+
+                String[] item = listView.getAdapter().getItem(i).toString().split(" - ");
+                Float item_float2 = Float.valueOf(item[1]);
+
+                Float item_float1 = (item_float2/sum)*100;
+
+                test.set(i,listView.getAdapter().getItem(i).toString()+" - "+Float.toString(item_float1)+"%");
+                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, test);
+
+                listView.setAdapter(adapter);
+
+            }
 
             textview_answer.setText(Float.toString(sum));
-
-
-            /*float answer_float;
-
-            TextView textview_answer = (TextView) findViewById(R.id.TextView_Answer);
-            EditText edt = (EditText) findViewById(R.id.Multiplier_First);
-            EditText edt2 = (EditText) findViewById(R.id.Multiplier_Second);
-
-            if (edt.getText() == null || edt2.getText() == null) {
-
-                textview_answer.setText("Error");
-
-            } else {
-
-                float multiplier_first = Float.valueOf(edt.getText().toString());
-                float multiplier_second = Float.valueOf(edt2.getText().toString());
-
-                answer_float = multiplier_first * multiplier_second;
-                String answer_string = Float.toString(answer_float);
-
-                textview_answer.setTextSize(40);
-                textview_answer.setText(answer_string);
-
-            }*/
-
-
 
         }
 
@@ -84,9 +77,10 @@ public class MainActivity extends Activity {
 
         }
 
+        @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-            TextView textView = (TextView) findViewById(R.id.textView1);
+            //TextView textView = (TextView) findViewById(R.id.textView1);
 
             if (data == null) { return; }
 
@@ -96,6 +90,5 @@ public class MainActivity extends Activity {
             adapterEdit.add(data.getStringExtra("floatOil"));
             adapterEdit.notifyDataSetChanged();
         }
-
 
 }

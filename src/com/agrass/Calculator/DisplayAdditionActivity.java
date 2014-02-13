@@ -10,7 +10,7 @@ import android.widget.*;
 
 public class DisplayAdditionActivity extends Activity {
 
-    String[] data_oils = {"Оливковое", "Ростительное", "Облепиховое", "Эвкалиптовое", "млдапдваы"};
+    String[] data_oils = {"Оливковое", "Растительное", "Облепиховое", "Эвкалиптовое", "Льняное", "Тыквенное", "Кокосовое"};
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -54,20 +54,20 @@ public class DisplayAdditionActivity extends Activity {
 
             Intent intent = new Intent(this, MainActivity.class);
 
-            EditText editTextMultiplierFirst = (EditText) findViewById(R.id.editText_Multiplier_First);
-            EditText editTextMultiplierSecond = (EditText) findViewById(R.id.editText_Multiplier_Second);
+            EditText editTextMass = (EditText) findViewById(R.id.editText_Multiplier_First);
+            //EditText editTextMultiplierSecond = (EditText) findViewById(R.id.editText_Multiplier_Second);
 
-            String StringMultiplierFirst = editTextMultiplierFirst.getText().toString();
-            String StringMultiplierSecond = editTextMultiplierSecond.getText().toString();
+            String StringMass = editTextMass.getText().toString();
+            //String StringMultiplierSecond = editTextMultiplierSecond.getText().toString();
 
             String valueOfSpinner = spinner.getSelectedItem().toString();
 
-            float multiplier_first = Float.valueOf(editTextMultiplierFirst.getText().toString());
-            float multiplier_second = Float.valueOf(editTextMultiplierSecond.getText().toString());
+            //float multiplier_first = Float.valueOf(editTextMultiplierFirst.getText().toString());
+
 
             //float[] floatOil = {multiplier_first, multiplier_second};
 
-            String ans = valueOfSpinner+" - "+StringMultiplierSecond+"-"+StringMultiplierFirst;
+            String ans = valueOfSpinner+" - "+StringMass;
 
             intent.putExtra("floatOil", ans);
             //intent.putExtra("ans",ans);

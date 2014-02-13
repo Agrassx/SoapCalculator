@@ -4,4 +4,6 @@
     <string name="button_add">Add</string>
     <string name="button_solve">Solve</string>
     <string name="app">Calculator</string>
+    <string name="ButtonAdd">Add</string>
+    <string name="answer">Answer</string>
 </resources>
