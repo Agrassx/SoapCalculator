@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
 public class DisplayAdditionActivity extends Activity {
 
     String[] data_oils = {"Оливковое", "Растительное", "Облепиховое", "Эвкалиптовое", "Льняное", "Тыквенное", "Кокосовое"};
+    Spinner spinner;
+    ArrayAdapter<String> adapter;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -22,10 +23,12 @@ public class DisplayAdditionActivity extends Activity {
                 getActionBar().setDisplayHomeAsUpEnabled(true);
             }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_oils);
+        Intent intent = new Intent(this, MainActivity.class);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_oils);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(adapter);
 
         spinner.setPrompt("Масла");//Title
@@ -36,43 +39,40 @@ public class DisplayAdditionActivity extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // View element position
                 Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
+
     }
-
-
-
-
-
 
         public void buttonAdd(View v) {
 
-            Spinner spinner = (Spinner) findViewById(R.id.spinner);
+            spinner = (Spinner) findViewById(R.id.spinner);
 
             Intent intent = new Intent(this, MainActivity.class);
 
             EditText editTextMass = (EditText) findViewById(R.id.editText_Multiplier_First);
-            //EditText editTextMultiplierSecond = (EditText) findViewById(R.id.editText_Multiplier_Second);
 
-            String StringMass = editTextMass.getText().toString();
-            //String StringMultiplierSecond = editTextMultiplierSecond.getText().toString();
+            if (editTextMass.getText().toString().isEmpty() == true) {
 
-            String valueOfSpinner = spinner.getSelectedItem().toString();
+                Toast.makeText(getBaseContext(), "Укажите массу!", Toast.LENGTH_LONG).show();
 
-            //float multiplier_first = Float.valueOf(editTextMultiplierFirst.getText().toString());
+            } else {
 
+                String StringMass = editTextMass.getText().toString();
 
-            //float[] floatOil = {multiplier_first, multiplier_second};
+                String valueOfSpinner = spinner.getSelectedItem().toString();
 
-            String ans = valueOfSpinner+" - "+StringMass;
+                String ans = valueOfSpinner+" - "+StringMass+" - ";
 
-            intent.putExtra("floatOil", ans);
-            //intent.putExtra("ans",ans);
-            setResult(RESULT_OK, intent);
-            finish();
+                intent.putExtra("floatOil", ans);
+
+                setResult(RESULT_OK, intent);
+                finish();
+            }
         }
 
 }
