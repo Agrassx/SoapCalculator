@@ -18,18 +18,36 @@ public class MainActivity extends Activity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
-            Log.e("","OnCreate");
-
             setContentView(R.layout.main);
 
+
             listView = (ListView) findViewById(R.id.listView1);
+            TextView textview_answer = (TextView) findViewById(R.id.textView);
+
+            String text = "";
+
+            if (savedInstanceState != null) {
+
+                text = savedInstanceState.getString("ArrayStateKey");
+                textview_answer.setText(text);
+
+                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                        savedInstanceState.getStringArrayList("f"));
+
+                listView.setAdapter(adapter);
+
+            } else {
+
+            Log.e("see","OnCreate");
 
             ArrayList<String> stringOil = new ArrayList<String>();
 
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, test);
 
             listView.setAdapter(adapter);
+
+            }
+
 
         }
 
@@ -89,9 +107,9 @@ public class MainActivity extends Activity {
 
                 Float itemMass = Float.valueOf(item[1]);
 
-                int item_percent = (Math.round((itemMass/sum)*100)*100);
+                float item_percent = Math.round((itemMass/sum)*10000);
 
-                test.set(i,StringOil+" - "+item[1]+" - "+Float.toString(item_percent/100)+"%");
+                test.set(i, StringOil+" - "+item[1]+" - "+Float.toString(item_percent/100)+"%");
                 adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, test);
 
                 listView.setAdapter(adapter);
@@ -99,6 +117,36 @@ public class MainActivity extends Activity {
 
             }
 
+        }
+
+
+        public void onSaveInstanceState(Bundle saveInstanceState) {
+
+            TextView myTextView = (TextView)findViewById(R.id.textView);
+//            saveInstanceState.putStringArrayList("ArrayListStateKey", test);
+            super.onSaveInstanceState(saveInstanceState);
+            saveInstanceState.putString("ArrayStateKey", myTextView.getText().toString());
+
+            ArrayList<String> saveAdapter = new ArrayList<String>();
+            for (int i = 0; i < adapter.getCount(); i++)
+                saveAdapter.add(adapter.getItem(i).toString());
+
+            saveInstanceState.putStringArrayList("f",saveAdapter);
+
+        }
+
+        @Override
+        protected void onRestoreInstanceState(Bundle savedInstanceState) {
+            super.onRestoreInstanceState(savedInstanceState);
+
+            String stateSaved = savedInstanceState.getString("ArrayStateKey");
+
+            if(stateSaved == null){
+            Toast.makeText(MainActivity.this,
+                    "onRestoreInstanceState:\n" +
+                            "NO state saved!",
+                    Toast.LENGTH_LONG).show();
+            }
         }
 
 }
