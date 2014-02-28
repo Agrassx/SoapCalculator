@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import java.util.ArrayList;
@@ -13,7 +16,7 @@ public class MainActivity extends Activity {
 
         ListView listView;
         ArrayAdapter<String> adapter;
-        ArrayList<String> test = new ArrayList<String>();
+        ArrayList<String> DataOils = new ArrayList<String>();
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +45,43 @@ public class MainActivity extends Activity {
 
             ArrayList<String> stringOil = new ArrayList<String>();
 
-            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, test);
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
 
             listView.setAdapter(adapter);
+            registerForContextMenu(listView);
 
             }
 
 
+
         }
 
-        public void solve(View view) {
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(0, v.getId(), 0, "Delete");
+        }
+
+        public boolean onContextItemSelected(MenuItem item) {
+
+            if(item.getTitle() == "Delete"){
+
+                deleteItem(item.getItemId());
+
+            } else {
+
+                return false;
+            }
+
+            return true;
+        }
+
+        public void deleteItem(int id){
+
+            Toast.makeText(this, "Delete was called, but its another story", Toast.LENGTH_SHORT).show();
+        }
+
+    public void solve(View view) {
 
             TextView textview_answer = (TextView) findViewById(R.id.textView);
 
@@ -109,8 +139,8 @@ public class MainActivity extends Activity {
 
                 float item_percent = Math.round((itemMass/sum)*10000);
 
-                test.set(i, StringOil+" - "+item[1]+" - "+Float.toString(item_percent/100)+"%");
-                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, test);
+                DataOils.set(i, StringOil+" - "+item[1]+" - "+Float.toString(item_percent/100)+"%");
+                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
 
                 listView.setAdapter(adapter);
 
@@ -123,7 +153,6 @@ public class MainActivity extends Activity {
         public void onSaveInstanceState(Bundle saveInstanceState) {
 
             TextView myTextView = (TextView)findViewById(R.id.textView);
-//            saveInstanceState.putStringArrayList("ArrayListStateKey", test);
             super.onSaveInstanceState(saveInstanceState);
             saveInstanceState.putString("ArrayStateKey", myTextView.getText().toString());
 
