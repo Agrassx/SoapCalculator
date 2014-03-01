@@ -31,27 +31,18 @@ public class MainActivity extends Activity {
 
                 String text_answer = savedInstanceState.getString("ArrayStateKey");
                 textview_answer.setText(text_answer);
-
                 DataOils = savedInstanceState.getStringArrayList("f");
-
                 adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-
-                listView.setAdapter(adapter);
-                registerForContextMenu(listView);
 
             } else {
 
             Log.e("see","OnCreate");
-
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-
-            listView.setAdapter(adapter);
-
-            registerForContextMenu(listView);
 
             }
 
-
+            listView.setAdapter(adapter);
+            registerForContextMenu(listView);
 
         }
 
@@ -69,8 +60,6 @@ public class MainActivity extends Activity {
 
         public boolean onContextItemSelected(MenuItem item) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-//            if(item.getTitle() == "Delete") {
 
             if ( item.getItemId() == 0 ) {
 
