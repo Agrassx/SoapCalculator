@@ -59,6 +59,7 @@ public class MainActivity extends Activity {
         }
 
         public boolean onContextItemSelected(MenuItem item) {
+
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
             if ( item.getItemId() == 0 ) {
@@ -81,7 +82,7 @@ public class MainActivity extends Activity {
             Toast.makeText(this, "Delete was called, but its another story", Toast.LENGTH_SHORT).show();
         }
 
-    public void solve(View view) {
+        public void solve(View view) {
 
             TextView textview_answer = (TextView) findViewById(R.id.textView);
 
