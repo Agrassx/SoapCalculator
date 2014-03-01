@@ -17,37 +17,35 @@ public class MainActivity extends Activity {
         ListView listView;
         ArrayAdapter<String> adapter;
         ArrayList<String> DataOils = new ArrayList<String>();
+        String[] ContextMenuItems;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
             setContentView(R.layout.main);
-
-
             listView = (ListView) findViewById(R.id.listView1);
             TextView textview_answer = (TextView) findViewById(R.id.textView);
 
-            String text = "";
-
             if (savedInstanceState != null) {
 
-                text = savedInstanceState.getString("ArrayStateKey");
-                textview_answer.setText(text);
+                String text_answer = savedInstanceState.getString("ArrayStateKey");
+                textview_answer.setText(text_answer);
 
                 adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                         savedInstanceState.getStringArrayList("f"));
 
                 listView.setAdapter(adapter);
+                registerForContextMenu(listView);
 
             } else {
 
             Log.e("see","OnCreate");
 
-            ArrayList<String> stringOil = new ArrayList<String>();
-
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
 
             listView.setAdapter(adapter);
+
             registerForContextMenu(listView);
 
             }
@@ -57,14 +55,22 @@ public class MainActivity extends Activity {
         }
 
         @Override
-        public void onCreateContextMenu(ContextMenu menu, View v,
+        public void onCreateContextMenu(ContextMenu ContextMenuOils, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
-            menu.add(0, v.getId(), 0, "Delete");
+
+            ContextMenuItems = getResources().getStringArray(R.array.ContextMenu);
+
+//            ContextMenuOils.add("Delete");
+            for (int i = 0; i < ContextMenuItems.length; i++) {
+                ContextMenuOils.add(ContextMenuItems[i]);
+            }
         }
 
         public boolean onContextItemSelected(MenuItem item) {
 
-            if(item.getTitle() == "Delete"){
+//            if(item.getTitle() == "Delete")
+
+            if(item.getItemId() == 0) {
 
                 deleteItem(item.getItemId());
 
@@ -76,7 +82,7 @@ public class MainActivity extends Activity {
             return true;
         }
 
-        public void deleteItem(int id){
+        public void deleteItem(int id) {
 
             Toast.makeText(this, "Delete was called, but its another story", Toast.LENGTH_SHORT).show();
         }
@@ -116,8 +122,6 @@ public class MainActivity extends Activity {
             adapterEdit.add(data.getStringExtra("floatOil"));
             adapterEdit.notifyDataSetChanged();
 
-            TextView textview_answer = (TextView) findViewById(R.id.textView);
-
             float sum = 0;
 
             for (int i = 0; i < listView.getCount(); i++) {
@@ -144,16 +148,14 @@ public class MainActivity extends Activity {
 
                 listView.setAdapter(adapter);
 
-
             }
-
         }
 
 
         public void onSaveInstanceState(Bundle saveInstanceState) {
+            super.onSaveInstanceState(saveInstanceState);
 
             TextView myTextView = (TextView)findViewById(R.id.textView);
-            super.onSaveInstanceState(saveInstanceState);
             saveInstanceState.putString("ArrayStateKey", myTextView.getText().toString());
 
             ArrayList<String> saveAdapter = new ArrayList<String>();
@@ -162,6 +164,7 @@ public class MainActivity extends Activity {
 
             saveInstanceState.putStringArrayList("f",saveAdapter);
 
+//            saveInstanceState.putStringArray("ContextMenuItems",ContextMenuItems);
         }
 
         @Override
@@ -170,7 +173,7 @@ public class MainActivity extends Activity {
 
             String stateSaved = savedInstanceState.getString("ArrayStateKey");
 
-            if(stateSaved == null){
+            if (stateSaved == null) {
             Toast.makeText(MainActivity.this,
                     "onRestoreInstanceState:\n" +
                             "NO state saved!",

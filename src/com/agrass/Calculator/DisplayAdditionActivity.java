@@ -16,7 +16,6 @@ public class DisplayAdditionActivity extends Activity {
                             "Льняное", "Тыквенное", "Кокосовое"};
     Spinner spinner;
     ArrayAdapter<String> adapter;
-    ArrayAdapter<String> adapterChanged;
     ArrayList<String> OilListSave;
 
     public void onCreate(Bundle savedInstanceState) {
