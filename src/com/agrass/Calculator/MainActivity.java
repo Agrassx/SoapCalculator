@@ -67,12 +67,16 @@ public class MainActivity extends Activity {
         }
 
         public boolean onContextItemSelected(MenuItem item) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-//            if(item.getTitle() == "Delete")
+//            if(item.getTitle() == "Delete") {
 
-            if(item.getItemId() == 0) {
+            if ( item.getItemId() == 0 ) {
 
                 deleteItem(item.getItemId());
+                int position = (int) info.id;
+                DataOils.remove(position);
+                this.adapter.notifyDataSetChanged();
 
             } else {
 
@@ -143,7 +147,7 @@ public class MainActivity extends Activity {
 
                 float item_percent = Math.round((itemMass/sum)*10000);
 
-                DataOils.set(i, StringOil+" - "+item[1]+" - "+Float.toString(item_percent/100)+"%");
+                DataOils.set(i, StringOil + " - " + item[1] + " - " + Float.toString(item_percent / 100) + "%");
                 adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
 
                 listView.setAdapter(adapter);
