@@ -32,8 +32,9 @@ public class MainActivity extends Activity {
                 String text_answer = savedInstanceState.getString("ArrayStateKey");
                 textview_answer.setText(text_answer);
 
-                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                        savedInstanceState.getStringArrayList("f"));
+                DataOils = savedInstanceState.getStringArrayList("f");
+
+                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
 
                 listView.setAdapter(adapter);
                 registerForContextMenu(listView);

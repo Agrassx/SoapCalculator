@@ -21,8 +21,10 @@ public class DisplayAdditionActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.e("Create","OnCreate Begin");
         setContentView(R.layout.activity_display_addition);
         spinner = (Spinner) findViewById(R.id.spinner);
+        EditText editTextMass = (EditText) findViewById(R.id.editText_Multiplier_First);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 //             Show the Up button in the action bar.
@@ -37,7 +39,6 @@ public class DisplayAdditionActivity extends Activity {
         if (savedInstanceState != null) {
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
                     savedInstanceState.getStringArrayList("f"));
-
         } else {
 
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_oils);
@@ -58,10 +59,12 @@ public class DisplayAdditionActivity extends Activity {
 //            public void onNothingSelected(AdapterView<?> arg0) {
 //            }
 //        });
-
+        Log.e("Create","OnCreate End");
     }
 
         public void buttonAdd(View v) {
+
+            Log.e("Add","ButtonAdd Begin");
 
             spinner = (Spinner) findViewById(R.id.spinner);
 
@@ -106,7 +109,7 @@ public class DisplayAdditionActivity extends Activity {
 
             }
             finish();
-
+            Log.e("Add","ButtonAdd End");
 
         }
 
