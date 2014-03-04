@@ -116,34 +116,46 @@ public class MainActivity extends Activity {
             ArrayAdapter<String> adapterEdit = (ArrayAdapter<String>) listView.getAdapter();
             adapterEdit.add(data.getStringExtra("floatOil"));
             adapterEdit.notifyDataSetChanged();
+//
+//            float sum = 0;
+//
+//            for (int i = 0; i < listView.getCount(); i++) {
+//
+//                String[] item = listView.getAdapter().getItem(i).toString().split(" - ");
+//                Float item_float2 = Float.valueOf(item[1]);
+//
+//                sum += item_float2;
+//
+//            }
+//
+//            for (int i = 0; i < listView.getCount(); i++) {
+//
+//                String[] item = listView.getAdapter().getItem(i).toString().split(" - ");
+//
+//                String StringOil = item[0];
+//
+//                Float itemMass = Float.valueOf(item[1]);
+//
+//                float item_percent = Math.round((itemMass/sum)*10000);
+//
+//                DataOils.set(i, StringOil + " - " + item[1] + " - " + Float.toString(item_percent / 100) + "%");
+//                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
+//
+//                listView.setAdapter(adapter);
+//
+//        }
 
-            float sum = 0;
 
-            for (int i = 0; i < listView.getCount(); i++) {
-
-                String[] item = listView.getAdapter().getItem(i).toString().split(" - ");
-                Float item_float2 = Float.valueOf(item[1]);
-
-                sum += item_float2;
-
+            AddDataRow com = new AddDataRow(adapter);
+            String hit[] = com.getString();
+            for (int i = 0; i < hit.length - 1; i++) {
+                if (hit[i] != null) {
+                    DataOils.set(i, hit[i]);
+                }
             }
-
-            for (int i = 0; i < listView.getCount(); i++) {
-
-                String[] item = listView.getAdapter().getItem(i).toString().split(" - ");
-
-                String StringOil = item[0];
-
-                Float itemMass = Float.valueOf(item[1]);
-
-                float item_percent = Math.round((itemMass/sum)*10000);
-
-                DataOils.set(i, StringOil + " - " + item[1] + " - " + Float.toString(item_percent / 100) + "%");
-                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-
-                listView.setAdapter(adapter);
-
-            }
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
+            adapter.notifyDataSetChanged();
+//            listView.setAdapter(adapter);
         }
 
 
