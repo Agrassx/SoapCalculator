@@ -6,23 +6,20 @@ import java.util.ArrayList;
 /**
  * Created by Agrass on 01.03.14.
  */
-public class AddDataRow {
+public class OilsTable {
 
-    public ArrayList<String> arraylist;
-    public int count;
-    //public String d[] = new String[count]; // ???!!! must "… = new String[count]"
     public ArrayAdapter<String> adapter;
 
-    public AddDataRow(ArrayAdapter<String> PutAdapter) {
+    public OilsTable(ArrayAdapter<String> PutAdapter) {
 
         adapter = PutAdapter;
 
     }
 
 
-    public String[] getString() {
+    public String[] getRows() {
 
-        count = adapter.getCount() + 1;
+        int count = adapter.getCount() + 1;
         String d[] = new String[count];
         float sum = 0;
 

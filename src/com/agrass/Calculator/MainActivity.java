@@ -67,7 +67,17 @@ public class MainActivity extends Activity {
                 deleteItem(item.getItemId());
                 int position = (int) info.id;
                 DataOils.remove(position);
+
+                OilsTable com = new OilsTable(adapter);
+                String hit[] = com.getRows();
+                for (int i = 0; i < hit.length - 1; i++) {
+                    if (hit[i] != null) {
+                        DataOils.set(i, hit[i]);
+                    }
+                }
+                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
                 this.adapter.notifyDataSetChanged();
+                listView.setAdapter(adapter);
 
             } else {
 
@@ -145,8 +155,8 @@ public class MainActivity extends Activity {
 //
 //        }
 
-            AddDataRow com = new AddDataRow(adapter);
-            String hit[] = com.getString();
+            OilsTable com = new OilsTable(adapter);
+            String hit[] = com.getRows();
             for (int i = 0; i < hit.length - 1; i++) {
                 if (hit[i] != null) {
                     DataOils.set(i, hit[i]);
@@ -154,6 +164,7 @@ public class MainActivity extends Activity {
             }
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
             adapter.notifyDataSetChanged();
+            listView.setAdapter(adapter);
         }
 
 
