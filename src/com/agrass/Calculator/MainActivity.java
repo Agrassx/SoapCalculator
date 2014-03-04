@@ -145,7 +145,6 @@ public class MainActivity extends Activity {
 //
 //        }
 
-
             AddDataRow com = new AddDataRow(adapter);
             String hit[] = com.getString();
             for (int i = 0; i < hit.length - 1; i++) {
@@ -155,7 +154,6 @@ public class MainActivity extends Activity {
             }
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
             adapter.notifyDataSetChanged();
-//            listView.setAdapter(adapter);
         }
 
 

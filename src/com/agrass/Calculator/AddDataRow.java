@@ -10,20 +10,20 @@ public class AddDataRow {
 
     public ArrayList<String> arraylist;
     public int count;
-    public String d[] = new String[20]; // ???!!! must "… = new String[count]"
+    //public String d[] = new String[count]; // ???!!! must "… = new String[count]"
     public ArrayAdapter<String> adapter;
 
     public AddDataRow(ArrayAdapter<String> PutAdapter) {
 
         adapter = PutAdapter;
-        count = PutAdapter.getCount();
 
     }
 
 
     public String[] getString() {
 
-        count = adapter.getCount();
+        count = adapter.getCount() + 1;
+        String d[] = new String[count];
         float sum = 0;
 
             for (int i = 0; i < adapter.getCount(); i++) {
