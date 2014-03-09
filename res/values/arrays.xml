@@ -2,14 +2,10 @@
 <resources>
 
     <string-array name="ContextMenu">
-        <item name="delete">Delete</item>
+        <item name="DeleteItemTableOil">Delete</item>
         <item>Action1</item>
         <item>Action2</item>
         <item>Action3</item>
-    </string-array>
-
-    <string-array name="PercentOfMass">
-
     </string-array>
 
 </resources>

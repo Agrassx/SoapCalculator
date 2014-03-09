@@ -5,4 +5,5 @@
         android:layout_height="wrap_content"
         android:textSize="24dip"
         android:padding="8dip"
+        android:text="Bobr"
         />

@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
@@ -27,19 +26,8 @@ public class MainActivity extends Activity {
             listView = (ListView) findViewById(R.id.listView1);
             TextView textview_answer = (TextView) findViewById(R.id.textView);
 
-            if (savedInstanceState != null) {
-
-                String text_answer = savedInstanceState.getString("ArrayStateKey");
-                textview_answer.setText(text_answer);
-                DataOils = savedInstanceState.getStringArrayList("f");
-                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-
-            } else {
-
             Log.e("see","OnCreate");
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-
-            }
 
             listView.setAdapter(adapter);
             registerForContextMenu(listView);
@@ -96,18 +84,11 @@ public class MainActivity extends Activity {
 
             TextView textview_answer = (TextView) findViewById(R.id.textView);
 
-            float sum = 0;
+            SumOfOilsMass SumOfMass = new SumOfOilsMass(adapter);
 
-            for (int i = 0; i < listView.getCount(); i++) {
+            float MassSum = SumOfMass.getSum();
 
-                String[] item = listView.getAdapter().getItem(i).toString().split(" - ");
-                Float item_float2 = Float.valueOf(item[1]);
-
-                sum += item_float2;
-
-            }
-
-            textview_answer.setText(Float.toString(sum));
+            textview_answer.setText(Float.toString(MassSum));
 
         }
 
@@ -118,6 +99,7 @@ public class MainActivity extends Activity {
 
         }
 
+
         @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -126,45 +108,29 @@ public class MainActivity extends Activity {
             ArrayAdapter<String> adapterEdit = (ArrayAdapter<String>) listView.getAdapter();
             adapterEdit.add(data.getStringExtra("floatOil"));
             adapterEdit.notifyDataSetChanged();
-//
-//            float sum = 0;
-//
-//            for (int i = 0; i < listView.getCount(); i++) {
-//
-//                String[] item = listView.getAdapter().getItem(i).toString().split(" - ");
-//                Float item_float2 = Float.valueOf(item[1]);
-//
-//                sum += item_float2;
-//
-//            }
-//
-//            for (int i = 0; i < listView.getCount(); i++) {
-//
-//                String[] item = listView.getAdapter().getItem(i).toString().split(" - ");
-//
-//                String StringOil = item[0];
-//
-//                Float itemMass = Float.valueOf(item[1]);
-//
-//                float item_percent = Math.round((itemMass/sum)*10000);
-//
-//                DataOils.set(i, StringOil + " - " + item[1] + " - " + Float.toString(item_percent / 100) + "%");
-//                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-//
-//                listView.setAdapter(adapter);
-//
-//        }
 
-            OilsTable com = new OilsTable(adapter);
-            String hit[] = com.getRows();
+            OilsTable oilstable = new OilsTable(adapter);
+            String hit[] = oilstable.getRows();
+
             for (int i = 0; i < hit.length - 1; i++) {
-                if (hit[i] != null) {
+                if (!hit[i].isEmpty()) {
                     DataOils.set(i, hit[i]);
                 }
             }
+
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
             adapter.notifyDataSetChanged();
             listView.setAdapter(adapter);
+
+            String stateSaved = data.getStringExtra("del");
+
+            if (stateSaved != null) {
+                Toast.makeText(MainActivity.this,
+                        "onRestoreInstanceState:\n" +
+                                "state saved!",
+                        Toast.LENGTH_LONG).show();
+            }
+
         }
 
 
@@ -176,7 +142,7 @@ public class MainActivity extends Activity {
 
             ArrayList<String> saveAdapter = new ArrayList<String>();
             for (int i = 0; i < adapter.getCount(); i++)
-                saveAdapter.add(adapter.getItem(i).toString());
+                saveAdapter.add(adapter.getItem(i));
 
             saveInstanceState.putStringArrayList("f",saveAdapter);
 
@@ -187,14 +153,18 @@ public class MainActivity extends Activity {
         protected void onRestoreInstanceState(Bundle savedInstanceState) {
             super.onRestoreInstanceState(savedInstanceState);
 
-            String stateSaved = savedInstanceState.getString("ArrayStateKey");
+            TextView textview_answer = (TextView) findViewById(R.id.textView);
 
-            if (stateSaved == null) {
-            Toast.makeText(MainActivity.this,
-                    "onRestoreInstanceState:\n" +
-                            "NO state saved!",
-                    Toast.LENGTH_LONG).show();
-            }
+            String text_answer = savedInstanceState.getString("ArrayStateKey");
+            textview_answer.setText(text_answer);
+
+            DataOils = savedInstanceState.getStringArrayList("f");
+
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
+
+            listView.setAdapter(adapter);
+            registerForContextMenu(listView);
+
         }
 
 }
