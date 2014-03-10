@@ -30,12 +30,29 @@ public class DisplayAdditionActivity extends Activity {
         Intent intent = new Intent(this, MainActivity.class);
         getActionBar().setDisplayHomeAsUpEnabled(false);
 
+        Bundle data = getIntent().getExtras();
+        String[] CheckedElements = getIntent().getStringArrayExtra("CheckedElements");
+
 
         spinner.setPrompt("Масла");//Title
         spinner.setSelection(0);
 
-        for (int i = 0; i < data_oils.length - 1; i++)
-            data_oil.add(i, data_oils[i]);
+
+        if (CheckedElements != null) { //<<<!!!>>>
+            Toast.makeText(getBaseContext(), "Not Null", Toast.LENGTH_LONG).show();
+            for (int i = 0; i < data_oils.length - 1; i++) {
+                for (int j = 0; j < CheckedElements.length - 1; j++)
+                    if (!data_oils[i].equals(CheckedElements[j])) { data_oil.add(i, data_oils[i]); }
+            }
+
+        } else {
+            Toast.makeText(getBaseContext(), "Is Null", Toast.LENGTH_LONG).show();
+            for (int i = 0; i < data_oils.length - 1; i++) {
+                data_oil.add(i, data_oils[i]);
+            }
+        }
+
+        Toast.makeText(getBaseContext(), data.getString("string"), Toast.LENGTH_LONG).show();// <<<!!!>>>
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_oil);
 

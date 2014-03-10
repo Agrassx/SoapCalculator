@@ -52,20 +52,8 @@ public class MainActivity extends Activity {
 
             if ( item.getItemId() == 0 ) {
 
-                deleteItem(item.getItemId());
                 int position = (int) info.id;
-                DataOils.remove(position);
-
-                OilsTable com = new OilsTable(adapter);
-                String hit[] = com.getRows();
-                for (int i = 0; i < hit.length - 1; i++) {
-                    if (hit[i] != null) {
-                        DataOils.set(i, hit[i]);
-                    }
-                }
-                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-                this.adapter.notifyDataSetChanged();
-                listView.setAdapter(adapter);
+                deleteItem(position);
 
             } else {
 
@@ -75,9 +63,20 @@ public class MainActivity extends Activity {
             return true;
         }
 
-        public void deleteItem(int id) {
+        public void deleteItem(int position) {
 
-            Toast.makeText(this, "Delete was called, but its another story", Toast.LENGTH_SHORT).show();
+            DataOils.remove(position);
+
+            OilsTable com = new OilsTable(adapter);
+            String hit[] = com.getRows();
+
+            for (int i = 0; i < hit.length - 1; i++) {
+                if (hit[i] != null) { DataOils.set(i, hit[i]); }
+            }
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
+            this.adapter.notifyDataSetChanged();
+            listView.setAdapter(adapter);
+
         }
 
         public void solve(View view) {
@@ -93,9 +92,17 @@ public class MainActivity extends Activity {
         }
 
         public void add(View view) {
-
             Intent intent = new Intent(this, DisplayAdditionActivity.class);
-            startActivityForResult(intent, 1);
+
+            CheckOilTableElements Check = new CheckOilTableElements(adapter);
+            String[] CheckedElements = Check.getStringArray();
+            Bundle data = new Bundle();
+
+            data.putString("string","string");
+            intent.putExtra("CheckElements", CheckedElements); 
+            intent.putExtra("Data", data);
+
+            startActivityForResult(intent, 1, data);
 
         }
 
