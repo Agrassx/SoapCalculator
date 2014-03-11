@@ -96,13 +96,11 @@ public class MainActivity extends Activity {
 
             CheckOilTableElements Check = new CheckOilTableElements(adapter);
             String[] CheckedElements = Check.getStringArray();
-            Bundle data = new Bundle();
 
-            data.putString("string","string");
-            intent.putExtra("CheckElements", CheckedElements); 
-            intent.putExtra("Data", data);
+            if (!adapter.isEmpty()) { intent.putExtra("CheckElements", CheckedElements); }
 
-            startActivityForResult(intent, 1, data);
+
+            startActivityForResult(intent, 1);
 
         }
 
