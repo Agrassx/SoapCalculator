@@ -17,13 +17,12 @@ public class CheckOilTableElements {
 
     public String[] getStringArray() {
 
-        String[] StringArray = new String[adapter.getCount()];
+        String[] StringArray = new String[adapter.getCount() + 1];
 
             for (int i = 0; i < adapter.getCount(); i++) {
 
                     String[] item = adapter.getItem(i).split(" - ");
-                    String StringOil = item[0];
-                    StringArray[i] = StringOil;
+                    StringArray[i] = item[0];
             }
 
         return StringArray;

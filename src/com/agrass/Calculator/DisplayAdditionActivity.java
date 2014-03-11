@@ -43,20 +43,20 @@ public class DisplayAdditionActivity extends Activity {
 
             for (int i = 0; i < data_oils.length - 1; i++) {
                 for (int j = 0; j < CheckedElements.length - 1; j++)
-                    if (!data_oils[i].equals(CheckedElements[j])) { SaveOilsList[i] = data_oils[i]; }
+                    if (!data_oils[i].equals(CheckedElements[j])) SaveOilsList[i] = data_oils[i];
 
+                Toast.makeText(getBaseContext(), SaveOilsList[i], Toast.LENGTH_LONG).show();
             }
-                 data_oils = null;
-                 data_oils = SaveOilsList;
+            //adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, SaveOilsList);
+
         } else {
             Toast.makeText(getBaseContext(), "Is Null", Toast.LENGTH_LONG).show();
-//            for (int i = 0; i < data_oils.length - 1; i++) {
-//                data_oil.add(i, data_oils[i]);
-//            }
+
+            //adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_oils);
         }
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_oils);
 
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_oils);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
