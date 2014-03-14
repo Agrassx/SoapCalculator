@@ -18,6 +18,7 @@ public class MainActivity extends Activity {
     ArrayAdapter<String> adapter;
     ArrayList<String> DataOils = new ArrayList<String>();
     String[] ContextMenuItems;
+    ArrayList<StructureTest> StructureList = new ArrayList<StructureTest>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,15 @@ public class MainActivity extends Activity {
         ArrayAdapter<String> adapterEdit = (ArrayAdapter<String>) listView.getAdapter();
         adapterEdit.add(data.getStringExtra("floatOil"));
         adapterEdit.notifyDataSetChanged();
+
+
+        StructureTest Struc = new StructureTest(data.getStringExtra("floatOil"));
+        StructureList.add(Struc);
+
+        for (int i = 0; i < StructureList.size(); i++ )
+            Toast.makeText(MainActivity.this, StructureList.get(i).getName()+" - "+StructureList.get(i).getMass(),
+                    Toast.LENGTH_SHORT).show();
+
 
         OilsTable oilstable = new OilsTable(adapter);
         String hit[] = oilstable.getRows();
