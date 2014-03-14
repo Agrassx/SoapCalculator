@@ -1,16 +1,15 @@
 package com.agrass.Calculator;
 
-public class StructureTest {
+public class StructureOfOils {
     String Name;
     float Mass;
 
-    public StructureTest(String Row) {
+    public StructureOfOils(String Row) {
 
         String[] item = Row.split("-");
 
         Name = item[0];
         Mass = Float.valueOf(item[1]);
-
 
     }
 

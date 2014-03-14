@@ -7,22 +7,24 @@ import java.util.ArrayList;
 public class CheckOilTableElements {
 
     public ArrayAdapter<String> adapter;
+    public ArrayList<StructureOfOils> arrayList = new ArrayList<StructureOfOils>();
 
-    public CheckOilTableElements(ArrayAdapter<String> PutAdapter) {
+    public CheckOilTableElements(ArrayList<StructureOfOils> arrayList) {
 
-        adapter = PutAdapter;
+        //adapter = PutAdapter;
+        this.arrayList = arrayList;
 
     }
 
 
     public String[] getStringArray() {
 
-        String[] StringArray = new String[adapter.getCount() + 1];
+        String[] StringArray = new String[arrayList.size()];
 
-            for (int i = 0; i < adapter.getCount(); i++) {
+            for (int i = 0; i < arrayList.size(); i++) {
 
-                    String[] item = adapter.getItem(i).split(" - ");
-                    StringArray[i] = item[0];
+                    String NameOfOil = arrayList.get(i).getName();
+                    StringArray[i] = NameOfOil;
             }
 
         return StringArray;

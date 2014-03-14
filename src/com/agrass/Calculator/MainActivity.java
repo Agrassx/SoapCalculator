@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainActivity extends Activity {
 
@@ -18,7 +17,7 @@ public class MainActivity extends Activity {
     ArrayAdapter<String> adapter;
     ArrayList<String> DataOils = new ArrayList<String>();
     String[] ContextMenuItems;
-    ArrayList<StructureTest> StructureList = new ArrayList<StructureTest>();
+    ArrayList<StructureOfOils> OilsList = new ArrayList<StructureOfOils>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,7 @@ public class MainActivity extends Activity {
 
         DataOils.remove(position);
 
-        OilsTable com = new OilsTable(adapter);
+        OilsTable com = new OilsTable(OilsList);
         String MainTable[] = com.getRows();
 
         for (int i = 0; i < MainTable.length - 1; i++) if (MainTable[i] != null) DataOils.set(i, MainTable[i]);
@@ -81,7 +80,7 @@ public class MainActivity extends Activity {
 
         TextView textview_answer = (TextView) findViewById(R.id.textView);
 
-        SumOfOilsMass SumOfMass = new SumOfOilsMass(adapter);
+        SumOfOilsMass SumOfMass = new SumOfOilsMass(OilsList);
 
         float MassSum = SumOfMass.getSum();
 
@@ -92,7 +91,7 @@ public class MainActivity extends Activity {
     public void add(View view) {
         Intent intent = new Intent(this, DisplayAdditionActivity.class);
 
-        CheckOilTableElements CheckOilElements = new CheckOilTableElements(adapter);
+        CheckOilTableElements CheckOilElements = new CheckOilTableElements(OilsList);
         String[] CheckedElements = CheckOilElements.getStringArray();
 
         if (!adapter.isEmpty()) intent.putExtra("CheckElements", CheckedElements);
@@ -111,15 +110,11 @@ public class MainActivity extends Activity {
         adapterEdit.notifyDataSetChanged();
 
 
-        StructureTest Struc = new StructureTest(data.getStringExtra("floatOil"));
-        StructureList.add(Struc);
-
-        for (int i = 0; i < StructureList.size(); i++ )
-            Toast.makeText(MainActivity.this, StructureList.get(i).getName()+" - "+StructureList.get(i).getMass(),
-                    Toast.LENGTH_SHORT).show();
+        StructureOfOils OilRow = new StructureOfOils(data.getStringExtra("floatOil"));
+        OilsList.add(OilRow);
 
 
-        OilsTable oilstable = new OilsTable(adapter);
+        OilsTable oilstable = new OilsTable(OilsList);
         String hit[] = oilstable.getRows();
 
         for (int i = 0; i < hit.length - 1; i++)
@@ -128,15 +123,6 @@ public class MainActivity extends Activity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
-
-        String stateSaved = data.getStringExtra("del");
-
-        if (stateSaved != null) {
-            Toast.makeText(MainActivity.this,
-                        "onRestoreInstanceState:\n" +
-                                "state saved!",
-                        Toast.LENGTH_LONG).show();
-        }
 
     }
 

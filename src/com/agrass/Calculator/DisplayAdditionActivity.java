@@ -29,6 +29,7 @@ public class DisplayAdditionActivity extends Activity {
 
         String[] CheckedElements = getIntent().getStringArrayExtra("CheckElements");
 
+
         spinner.setPrompt("Масла");//Title
         spinner.setSelection(0);
 
@@ -36,10 +37,12 @@ public class DisplayAdditionActivity extends Activity {
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, OilList);
 
-        if (CheckedElements != null) for (int i = 0; i < CheckedElements.length; i++) {
-            adapter.remove(CheckedElements[i]);
-            adapter.notifyDataSetChanged();
-        }
+        if (CheckedElements != null)
+            for (int i = 0; i < CheckedElements.length; i++) {
+
+                adapter.remove(CheckedElements[i]);
+                adapter.notifyDataSetChanged();
+            }
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -62,7 +65,7 @@ public class DisplayAdditionActivity extends Activity {
         if (StringMass.isEmpty()) makeText(getBaseContext(), "Укажите массу!", LENGTH_LONG).show();
         else {
 
-            String ans = valueOfSpinner + " - " + StringMass;
+            String ans = valueOfSpinner + "-" + StringMass;
             intent.putExtra("floatOil", ans);
 
             setResult(RESULT_OK, intent);

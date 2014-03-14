@@ -1,14 +1,15 @@
 package com.agrass.Calculator;
 
-import android.widget.ArrayAdapter;
+import java.util.ArrayList;
 
 public class SumOfOilsMass {
 
-    public ArrayAdapter<String> adapter;
+    //public ArrayAdapter<String> adapter;
+    public ArrayList<StructureOfOils> arrayList = new ArrayList<StructureOfOils>();
 
-    public SumOfOilsMass(ArrayAdapter<String> PutAdapter) {
+    public SumOfOilsMass(ArrayList<StructureOfOils> arrayList) {
 
-        adapter = PutAdapter;
+        this.arrayList = arrayList;
 
     }
 
@@ -17,14 +18,7 @@ public class SumOfOilsMass {
 
         float sum = 0;
 
-        for (int i = 0; i < adapter.getCount(); i++) {
-
-            String[] item = adapter.getItem(i).split(" - ");
-            Float item_float2 = Float.valueOf(item[1]);
-
-            sum += item_float2;
-
-        }
+        for (int i = 0; i < arrayList.size(); i++) sum += arrayList.get(i).getMass();
 
         return sum;
     }

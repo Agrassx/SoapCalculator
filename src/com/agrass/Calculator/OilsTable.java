@@ -1,39 +1,37 @@
 package com.agrass.Calculator;
-import android.widget.ArrayAdapter;
 
+import java.util.ArrayList;
 
-/**
- * Created by Agrass on 01.03.14.
- */
 public class OilsTable {
 
-    public ArrayAdapter<String> adapter;
+//    public ArrayAdapter<String> adapter;
+    public ArrayList<StructureOfOils> arrayList = new ArrayList<StructureOfOils>();
 
-    public OilsTable(ArrayAdapter<String> PutAdapter) {
+    public OilsTable(ArrayList<StructureOfOils> arrayList) {
 
-        adapter = PutAdapter;
+//        adapter = PutAdapter;
+        this.arrayList = arrayList;
 
     }
 
 
     public String[] getRows() {
 
-        int count = adapter.getCount() + 1;
+        int count = arrayList.size() + 1;
         String Table[] = new String[count];
-        SumOfOilsMass SumOfMass = new SumOfOilsMass(adapter);
+        SumOfOilsMass SumOfMass = new SumOfOilsMass(arrayList);
         float sum = SumOfMass.getSum();
 
-        for (int i = 0; i < adapter.getCount(); i++) {
 
-            String[] item = adapter.getItem(i).split(" - ");
 
-            String StringOil = item[0];
+        for (int i = 0; i < arrayList.size(); i++) {
 
-            Float itemMass = Float.valueOf(item[1]);
-
-            float item_percent = Math.round((itemMass/sum)*10000);
-
-            Table[i] =  StringOil + " - " + item[1] + " - " + Float.toString(item_percent / 100) + "%";
+//            String[] item = adapter.getItem(i).split(" - ");
+//            String StringOil = item[0];
+//            Float itemMass = Float.valueOf(item[1]);
+            float item_percent = Math.round((arrayList.get(i).getMass()/sum)*10000);
+            Table[i] =  arrayList.get(i).getName() + " - " + Float.toString(arrayList.get(i).getMass())
+                    + " - " + Float.toString(item_percent / 100) + "%";
 
         }
 
