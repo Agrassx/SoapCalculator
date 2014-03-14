@@ -10,166 +10,155 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends Activity {
 
-        ListView listView;
-        ArrayAdapter<String> adapter;
-        ArrayList<String> DataOils = new ArrayList<String>();
-        String[] ContextMenuItems;
+    ListView listView;
+    ArrayAdapter<String> adapter;
+    ArrayList<String> DataOils = new ArrayList<String>();
+    String[] ContextMenuItems;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-            setContentView(R.layout.main);
-            listView = (ListView) findViewById(R.id.listView1);
-            TextView textview_answer = (TextView) findViewById(R.id.textView);
+        TextView textview_answer = (TextView) findViewById(R.id.textView);
+        setContentView(R.layout.main);
+        listView = (ListView) findViewById(R.id.listView1);
 
-            Log.e("see","OnCreate");
-            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
+        Log.e("see","OnCreate");
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
 
-            listView.setAdapter(adapter);
-            registerForContextMenu(listView);
+        listView.setAdapter(adapter);
+        registerForContextMenu(listView);
 
         }
 
-        @Override
-        public void onCreateContextMenu(ContextMenu ContextMenuOils, View v,
+    @Override
+    public void onCreateContextMenu(ContextMenu ContextMenuOils, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
 
-            ContextMenuItems = getResources().getStringArray(R.array.ContextMenu);
+        ContextMenuItems = getResources().getStringArray(R.array.ContextMenu);
+        for (int i = 0; i < ContextMenuItems.length; i++) ContextMenuOils.add(ContextMenuItems[i]);
 
-//            ContextMenuOils.add("Delete");
-            for (int i = 0; i < ContextMenuItems.length; i++) {
-                ContextMenuOils.add(ContextMenuItems[i]);
-            }
-        }
-
-        public boolean onContextItemSelected(MenuItem item) {
-
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-            if ( item.getItemId() == 0 ) {
-
-                int position = (int) info.id;
-                deleteItem(position);
-
-            } else {
-
-                return false;
-            }
-
-            return true;
-        }
-
-        public void deleteItem(int position) {
-
-            DataOils.remove(position);
-
-            OilsTable com = new OilsTable(adapter);
-            String hit[] = com.getRows();
-
-            for (int i = 0; i < hit.length - 1; i++) {
-                if (hit[i] != null) { DataOils.set(i, hit[i]); }
-            }
-            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-            this.adapter.notifyDataSetChanged();
-            listView.setAdapter(adapter);
-
-        }
-
-        public void solve(View view) {
-
-            TextView textview_answer = (TextView) findViewById(R.id.textView);
-
-            SumOfOilsMass SumOfMass = new SumOfOilsMass(adapter);
-
-            float MassSum = SumOfMass.getSum();
-
-            textview_answer.setText(Float.toString(MassSum));
-
-        }
-
-        public void add(View view) {
-            Intent intent = new Intent(this, DisplayAdditionActivity.class);
-
-            CheckOilTableElements Check = new CheckOilTableElements(adapter);
-            String[] CheckedElements = Check.getStringArray();
-
-            if (!adapter.isEmpty()) { intent.putExtra("CheckElements", CheckedElements); }
+    }
 
 
-            startActivityForResult(intent, 1);
 
-        }
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        if ( item.getItemId() == 0) {
+
+            int position = (int) info.id;
+            deleteItem(position);
+
+        } else return false;
+
+        return true;
+
+    }
+
+    public void deleteItem(int position) {
+
+        DataOils.remove(position);
+
+        OilsTable com = new OilsTable(adapter);
+        String MainTable[] = com.getRows();
+
+        for (int i = 0; i < MainTable.length - 1; i++) if (MainTable[i] != null) DataOils.set(i, MainTable[i]);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
+
+    }
+
+    public void solve(View view) {
+
+        TextView textview_answer = (TextView) findViewById(R.id.textView);
+
+        SumOfOilsMass SumOfMass = new SumOfOilsMass(adapter);
+
+        float MassSum = SumOfMass.getSum();
+
+        textview_answer.setText(Float.toString(MassSum));
+
+    }
+
+    public void add(View view) {
+        Intent intent = new Intent(this, DisplayAdditionActivity.class);
+
+        CheckOilTableElements CheckOilElements = new CheckOilTableElements(adapter);
+        String[] CheckedElements = CheckOilElements.getStringArray();
+
+        if (!adapter.isEmpty()) intent.putExtra("CheckElements", CheckedElements);
+
+        startActivityForResult(intent, 1);
+
+    }
 
 
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) { return; }
 
-            if (data == null) { return; }
+        ArrayAdapter<String> adapterEdit = (ArrayAdapter<String>) listView.getAdapter();
+        adapterEdit.add(data.getStringExtra("floatOil"));
+        adapterEdit.notifyDataSetChanged();
 
-            ArrayAdapter<String> adapterEdit = (ArrayAdapter<String>) listView.getAdapter();
-            adapterEdit.add(data.getStringExtra("floatOil"));
-            adapterEdit.notifyDataSetChanged();
+        OilsTable oilstable = new OilsTable(adapter);
+        String hit[] = oilstable.getRows();
 
-            OilsTable oilstable = new OilsTable(adapter);
-            String hit[] = oilstable.getRows();
+        for (int i = 0; i < hit.length - 1; i++)
+            if (!hit[i].isEmpty()) DataOils.set(i, hit[i]);
 
-            for (int i = 0; i < hit.length - 1; i++) {
-                if (!hit[i].isEmpty()) {
-                    DataOils.set(i, hit[i]);
-                }
-            }
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
 
-            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-            adapter.notifyDataSetChanged();
-            listView.setAdapter(adapter);
+        String stateSaved = data.getStringExtra("del");
 
-            String stateSaved = data.getStringExtra("del");
-
-            if (stateSaved != null) {
-                Toast.makeText(MainActivity.this,
+        if (stateSaved != null) {
+            Toast.makeText(MainActivity.this,
                         "onRestoreInstanceState:\n" +
                                 "state saved!",
                         Toast.LENGTH_LONG).show();
-            }
-
         }
 
+    }
 
-        public void onSaveInstanceState(Bundle saveInstanceState) {
-            super.onSaveInstanceState(saveInstanceState);
 
-            TextView myTextView = (TextView)findViewById(R.id.textView);
-            saveInstanceState.putString("ArrayStateKey", myTextView.getText().toString());
+    public void onSaveInstanceState(Bundle saveInstanceState) {
+        super.onSaveInstanceState(saveInstanceState);
 
-            ArrayList<String> saveAdapter = new ArrayList<String>();
+        TextView myTextView = (TextView)findViewById(R.id.textView);
+        saveInstanceState.putString("ArrayStateKey", myTextView.getText().toString());
+
+        ArrayList<String> saveAdapter = new ArrayList<String>();
             for (int i = 0; i < adapter.getCount(); i++)
                 saveAdapter.add(adapter.getItem(i));
+        saveInstanceState.putStringArrayList("f",saveAdapter);
+    }
 
-            saveInstanceState.putStringArrayList("f",saveAdapter);
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
 
-//            saveInstanceState.putStringArray("ContextMenuItems",ContextMenuItems);
-        }
+        TextView textview_answer = (TextView) findViewById(R.id.textView);
 
-        @Override
-        protected void onRestoreInstanceState(Bundle savedInstanceState) {
-            super.onRestoreInstanceState(savedInstanceState);
+        String text_answer = savedInstanceState.getString("ArrayStateKey");
+        textview_answer.setText(text_answer);
 
-            TextView textview_answer = (TextView) findViewById(R.id.textView);
+        DataOils = savedInstanceState.getStringArrayList("f");
 
-            String text_answer = savedInstanceState.getString("ArrayStateKey");
-            textview_answer.setText(text_answer);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
 
-            DataOils = savedInstanceState.getStringArrayList("f");
+        listView.setAdapter(adapter);
+        registerForContextMenu(listView);
 
-            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-
-            listView.setAdapter(adapter);
-            registerForContextMenu(listView);
-
-        }
+    }
 
 }

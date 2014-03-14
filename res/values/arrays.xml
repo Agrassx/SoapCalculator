@@ -2,8 +2,8 @@
 <resources>
 
     <string-array name="ContextMenu">
-        <item name="DeleteItemTableOil">Delete</item>
-        <item>Action1</item>
+        <item name="DeleteItemTableOil">Удалить</item>
+        <item>Изменить Массу</item>
         <item>Action2</item>
         <item>Action3</item>
     </string-array>

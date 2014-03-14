@@ -19,7 +19,7 @@ public class OilsTable {
     public String[] getRows() {
 
         int count = adapter.getCount() + 1;
-        String d[] = new String[count];
+        String Table[] = new String[count];
         SumOfOilsMass SumOfMass = new SumOfOilsMass(adapter);
         float sum = SumOfMass.getSum();
 
@@ -33,11 +33,11 @@ public class OilsTable {
 
             float item_percent = Math.round((itemMass/sum)*10000);
 
-            d[i] =  StringOil + " - " + item[1] + " - " + Float.toString(item_percent / 100) + "%";
+            Table[i] =  StringOil + " - " + item[1] + " - " + Float.toString(item_percent / 100) + "%";
 
         }
 
-        return d;
+        return Table;
 
     }
 
