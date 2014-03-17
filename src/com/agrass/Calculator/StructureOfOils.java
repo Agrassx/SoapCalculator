@@ -26,6 +26,8 @@ public class StructureOfOils {
 
     }
 
+    public String toString() { return Name + "-" + Mass; }
+
     public String getName() {
         return Name;
     }
@@ -33,6 +35,7 @@ public class StructureOfOils {
     public float getMass() {
         return Mass;
     }
+
 
 
 

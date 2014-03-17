@@ -204,9 +204,19 @@ public class MainActivity extends Activity {
         saveInstanceState.putString("ArrayStateKey", myTextView.getText().toString());
 
         ArrayList<String> saveAdapter = new ArrayList<String>();
-            for (int i = 0; i < adapter.getCount(); i++)
-                saveAdapter.add(adapter.getItem(i));
+        ArrayList<String> SaveData = new ArrayList<String>();
+
+        for (int i = 0; i < adapter.getCount(); i++)
+            saveAdapter.add(adapter.getItem(i));
+
+
+        for (int i = 0; i < OilsList.size(); i++)
+            SaveData.add(OilsList.get(i).toString());
+
+        saveInstanceState.putStringArrayList("SaveOilList", SaveData);
         saveInstanceState.putStringArrayList("SaveTableData",saveAdapter);
+
+
     }
 
     @Override
@@ -219,14 +229,23 @@ public class MainActivity extends Activity {
         textview_answer.setText(text_answer);
 
         DataOils = savedInstanceState.getStringArrayList("SaveTableData");
+        ArrayList<String> SaveData = savedInstanceState.getStringArrayList("SaveOilList");
+
+        for (int i = 0; i < SaveData.size(); i++) {
+            StructureOfOils OilRow = new StructureOfOils(SaveData.get(i));
+            OilsList.add(OilRow);
+        }
+
+        OilsTable oilstable = new OilsTable(OilsList);
+        String hit[] = oilstable.getRows();
+
+        for (int i = 0; i < hit.length - 1; i++)
+            if (!hit[i].isEmpty()) DataOils.set(i, hit[i]);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-
+        adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
-        registerForContextMenu(listView);
 
     }
-
-
 
 }
