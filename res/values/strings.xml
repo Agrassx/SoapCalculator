@@ -6,4 +6,13 @@
     <string name="app">Calculator</string>
     <string name="ButtonAdd">Добавить</string>
     <string name="answer">Answer</string>
+
+    <string name="CM_Delete">Удалить</string>
+    <string name="CM_ChangeMass">Изменить массу</string>
+    <string name="CM_AddOil">Добавить</string>
+
+    <string name="Dialog_Title">Изменить</string>
+    <string name="Dialog_Cancel">Отмена</string>
+    <string name="Dialog_OK">ОК</string>
+
 </resources>

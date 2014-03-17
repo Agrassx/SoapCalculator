@@ -1,22 +1,21 @@
 package com.agrass.Calculator;
 
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 import java.util.ArrayList;
+
 
 public class MainActivity extends Activity {
 
     ListView listView;
     ArrayAdapter<String> adapter;
     ArrayList<String> DataOils = new ArrayList<String>();
-    String[] ContextMenuItems;
     ArrayList<StructureOfOils> OilsList = new ArrayList<StructureOfOils>();
 
     @Override
@@ -36,43 +35,72 @@ public class MainActivity extends Activity {
         }
 
     @Override
-    public void onCreateContextMenu(ContextMenu ContextMenuOils, View v,
+    public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
 
-        ContextMenuItems = getResources().getStringArray(R.array.ContextMenu);
-        for (int i = 0; i < ContextMenuItems.length; i++) ContextMenuOils.add(ContextMenuItems[i]);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+
 
     }
 
 
 
     public boolean onContextItemSelected(MenuItem item) {
+        super.onContextItemSelected(item);
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-        if ( item.getItemId() == 0) {
+        int Pos = (int) info.id;
 
-            int position = (int) info.id;
-            deleteItem(position);
+        switch (item.getItemId()) {
+            case R.id.CMDelete:
+                deleteItem(Pos);
+                return true;
 
-        } else return false;
+            case R.id.CMChangeMass:
+                ChangeOilMass((int) info.id);
+                return true;
 
-        return true;
+            case R.id.CMAddOil:
+                deleteItem((int) info.id);
+                return true;
 
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     public void deleteItem(int position) {
 
-        DataOils.remove(position);
+        OilsList.remove(position);
+
 
         OilsTable com = new OilsTable(OilsList);
         String MainTable[] = com.getRows();
 
-        for (int i = 0; i < MainTable.length - 1; i++) if (MainTable[i] != null) DataOils.set(i, MainTable[i]);
+        DataOils.clear();
+
+        for (int i = 0; i < MainTable.length - 1; i++) if (!MainTable[i].isEmpty()) DataOils.add(MainTable[i]);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
+
+    }
+
+    public void ChangeOilMass(final int position) {
+
+        AlertDialog dialog = DialogFragmentChange.getDialog(this, DialogFragmentChange.IDD_Change);
+        dialog.show();
+
+
+        TextView tp = (TextView) dialog.findViewById(R.id.editTextChange);
+        TextView textview_answer = (TextView) findViewById(R.id.textView);
+
+        textview_answer.setText(tp.getText().toString());
+
 
     }
 
@@ -136,7 +164,7 @@ public class MainActivity extends Activity {
         ArrayList<String> saveAdapter = new ArrayList<String>();
             for (int i = 0; i < adapter.getCount(); i++)
                 saveAdapter.add(adapter.getItem(i));
-        saveInstanceState.putStringArrayList("f",saveAdapter);
+        saveInstanceState.putStringArrayList("SaveTableData",saveAdapter);
     }
 
     @Override
@@ -148,7 +176,7 @@ public class MainActivity extends Activity {
         String text_answer = savedInstanceState.getString("ArrayStateKey");
         textview_answer.setText(text_answer);
 
-        DataOils = savedInstanceState.getStringArrayList("f");
+        DataOils = savedInstanceState.getStringArrayList("SaveTableData");
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
 
@@ -156,5 +184,7 @@ public class MainActivity extends Activity {
         registerForContextMenu(listView);
 
     }
+
+
 
 }

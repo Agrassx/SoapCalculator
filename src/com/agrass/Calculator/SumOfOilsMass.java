@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class SumOfOilsMass {
 
-    //public ArrayAdapter<String> adapter;
     public ArrayList<StructureOfOils> arrayList = new ArrayList<StructureOfOils>();
 
     public SumOfOilsMass(ArrayList<StructureOfOils> arrayList) {

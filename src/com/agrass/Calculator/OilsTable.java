@@ -4,12 +4,10 @@ import java.util.ArrayList;
 
 public class OilsTable {
 
-//    public ArrayAdapter<String> adapter;
     public ArrayList<StructureOfOils> arrayList = new ArrayList<StructureOfOils>();
 
     public OilsTable(ArrayList<StructureOfOils> arrayList) {
 
-//        adapter = PutAdapter;
         this.arrayList = arrayList;
 
     }
@@ -26,12 +24,9 @@ public class OilsTable {
 
         for (int i = 0; i < arrayList.size(); i++) {
 
-//            String[] item = adapter.getItem(i).split(" - ");
-//            String StringOil = item[0];
-//            Float itemMass = Float.valueOf(item[1]);
             float item_percent = Math.round((arrayList.get(i).getMass()/sum)*10000);
             Table[i] =  arrayList.get(i).getName() + " - " + Float.toString(arrayList.get(i).getMass())
-                    + " - " + Float.toString(item_percent / 100) + "%";
+                   +  " - " + Float.toString(item_percent / 100) + "%";
 
         }
 
