@@ -4,6 +4,19 @@ public class StructureOfOils {
     String Name;
     float Mass;
 
+    public void putMassString(String Mass) {
+
+        this.Mass = Float.valueOf(Mass);
+
+    }
+
+    public void putMassFloat(Float Mass) {
+
+        this.Mass = Mass;
+
+    }
+
+
     public StructureOfOils(String Row) {
 
         String[] item = Row.split("-");
@@ -20,5 +33,7 @@ public class StructureOfOils {
     public float getMass() {
         return Mass;
     }
+
+
 
 }

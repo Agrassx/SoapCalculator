@@ -23,8 +23,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="1dp"
                 android:layout_alignParentStart="false"
-                android:text=""
-                android:hint="Масса [грамм]">
+                android:hint="Масса">
             <!--<requestFocus />-->
         </EditText>
 

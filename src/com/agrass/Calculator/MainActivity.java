@@ -64,7 +64,14 @@ public class MainActivity extends Activity {
                 return true;
 
             case R.id.CMAddOil:
-                deleteItem((int) info.id);
+                Intent intent = new Intent(this, DisplayAdditionActivity.class);
+
+                CheckOilTableElements CheckOilElements = new CheckOilTableElements(OilsList);
+                String[] CheckedElements = CheckOilElements.getStringArray();
+
+                if (!adapter.isEmpty()) intent.putExtra("CheckElements", CheckedElements);
+
+                startActivityForResult(intent, 1);
                 return true;
 
             default:
@@ -92,14 +99,49 @@ public class MainActivity extends Activity {
 
     public void ChangeOilMass(final int position) {
 
-        AlertDialog dialog = DialogFragmentChange.getDialog(this, DialogFragmentChange.IDD_Change);
+        final TextView textview_answer = (TextView) findViewById(R.id.textView);
+        final AlertDialog dialog = DialogFragmentChange.getDialog(this, DialogFragmentChange.IDD_Change);
+
         dialog.show();
 
 
-        TextView tp = (TextView) dialog.findViewById(R.id.editTextChange);
-        TextView textview_answer = (TextView) findViewById(R.id.textView);
 
-        textview_answer.setText(tp.getText().toString());
+        Button D_OK = (Button) dialog.findViewById(R.id.Ok);
+        Button D_Cancel = (Button) dialog.findViewById(R.id.Cancel);
+
+        D_OK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String NewMass = ((EditText)dialog.findViewById(R.id.editTextChange)).getText().toString();
+                OilsList.get(position).putMassString(NewMass);
+
+                OilsTable com = new OilsTable(OilsList);
+                String MainTable[] = com.getRows();
+
+                DataOils.clear();
+                for (int i = 0; i < MainTable.length - 1; i++) if (!MainTable[i].isEmpty()) DataOils.add(MainTable[i]);
+                dialog.dismiss();
+
+            }
+        });
+
+        D_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
+
+        String name = ((EditText)dialog.findViewById(R.id.editTextChange)).getText().toString();
+
+        textview_answer.setText(name);
 
 
     }
