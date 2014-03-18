@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Calculator</string>
+    <string name="app">Calculator</string>
     <string name="button_add">Добавить</string>
     <string name="button_solve">Посчитать</string>
-    <string name="app">Calculator</string>
     <string name="ButtonAdd">Добавить</string>
     <string name="answer">Answer</string>
 

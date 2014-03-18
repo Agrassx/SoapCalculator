@@ -65,7 +65,7 @@ public class DisplayAdditionActivity extends Activity {
         if (StringMass.isEmpty()) makeText(getBaseContext(), "Укажите массу!", LENGTH_LONG).show();
         else {
 
-            String ans = valueOfSpinner + "-" + StringMass;
+            String ans = valueOfSpinner + ";" + StringMass;
             intent.putExtra("floatOil", ans);
 
             setResult(RESULT_OK, intent);

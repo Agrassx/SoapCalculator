@@ -1,6 +1,6 @@
 package com.agrass.Calculator;
 
-public class StructureOfOils {
+public class Oil {
     String Name;
     float Mass;
 
@@ -17,16 +17,16 @@ public class StructureOfOils {
     }
 
 
-    public StructureOfOils(String Row) {
+    public Oil(String Row) {
 
-        String[] item = Row.split("-");
+        String[] item = Row.split(";");
 
         Name = item[0];
         Mass = Float.valueOf(item[1]);
 
     }
 
-    public String toString() { return Name + "-" + Mass; }
+    public String toString() { return Name + ";" + Mass; }
 
     public String getName() {
         return Name;

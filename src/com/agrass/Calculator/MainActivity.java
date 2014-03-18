@@ -2,10 +2,10 @@ package com.agrass.Calculator;
 
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import java.util.ArrayList;
@@ -14,23 +14,22 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
 
     ListView listView;
-    ArrayAdapter<String> adapter;
-    ArrayList<String> DataOils = new ArrayList<String>();
-    ArrayList<StructureOfOils> OilsList = new ArrayList<StructureOfOils>();
+    DialogFragment Dialog;
+    public ArrayAdapter<String> adapter;
+    public ArrayList<String> DataOils = new ArrayList<String>();
+    public ArrayList<Oil> OilsList = new ArrayList<Oil>();
+    public String str = "Rj-rj-rj";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TextView textview_answer = (TextView) findViewById(R.id.textView);
-        setContentView(R.layout.main);
-        listView = (ListView) findViewById(R.id.listView1);
-
-        Log.e("see","OnCreate");
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-
-        listView.setAdapter(adapter);
-        registerForContextMenu(listView);
+            setContentView(R.layout.main);
+            TextView textView = (TextView) findViewById(R.id.textView);
+            listView = (ListView) findViewById(R.id.listView1);
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
+            listView.setAdapter(adapter);
+            registerForContextMenu(listView);
 
         }
 
@@ -42,10 +41,7 @@ public class MainActivity extends Activity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.context_menu, menu);
 
-
     }
-
-
 
     public boolean onContextItemSelected(MenuItem item) {
         super.onContextItemSelected(item);
@@ -61,6 +57,7 @@ public class MainActivity extends Activity {
 
             case R.id.CMChangeMass:
                 ChangeOilMass((int) info.id);
+                //Dialog.show(getFragmentManager(), "dlg2");
                 return true;
 
             case R.id.CMAddOil:
@@ -83,7 +80,6 @@ public class MainActivity extends Activity {
 
         OilsList.remove(position);
 
-
         OilsTable com = new OilsTable(OilsList);
         String MainTable[] = com.getRows();
 
@@ -99,62 +95,57 @@ public class MainActivity extends Activity {
 
     public void ChangeOilMass(final int position) {
 
-        final TextView textview_answer = (TextView) findViewById(R.id.textView);
-        final AlertDialog dialog = DialogFragmentChange.getDialog(this, DialogFragmentChange.IDD_Change);
+        //final AlertDialog dialog = DialogFragmentChange.getDialog(this, DialogFragmentChange.IDD_Change);
+        final AlertDialog dialog = new DialogFragmentChange().getDialog(this, position);
+        //final dialig2 dlg = new dialig2();
+        final TextView textView = (TextView) findViewById(R.id.textView);
 
+
+        //dialog.show();
         dialog.show();
 
+            dialog.getButton(dialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            String NewMass = ((EditText) dialog.findViewById(R.id.editTextChange)).getText().toString();
+            OilsList.get(position).putMassString(NewMass);
+
+            OilsTable com = new OilsTable(OilsList);
+            String MainTable[] = com.getRows();
+
+            DataOils.clear();
+            for (int i = 0; i < MainTable.length - 1; i++) if (!MainTable[i].isEmpty()) DataOils.add(MainTable[i]);
+
+            SumOfOilsMass SumOfMass = new SumOfOilsMass(OilsList);
+            textView.setText("Сумма: " + Float.toString(SumOfMass.getSum()));
+            adapter.notifyDataSetChanged();
+            dialog.dismiss();
+
+        }
+    });
+
+    dialog.getButton(dialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            dialog.dismiss();
+        }
+    });
 
 
-        Button D_OK = (Button) dialog.findViewById(R.id.Ok);
-        Button D_Cancel = (Button) dialog.findViewById(R.id.Cancel);
 
-        D_OK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String NewMass = ((EditText)dialog.findViewById(R.id.editTextChange)).getText().toString();
-                OilsList.get(position).putMassString(NewMass);
-
-                OilsTable com = new OilsTable(OilsList);
-                String MainTable[] = com.getRows();
-
-                DataOils.clear();
-                for (int i = 0; i < MainTable.length - 1; i++) if (!MainTable[i].isEmpty()) DataOils.add(MainTable[i]);
-                dialog.dismiss();
-
-            }
-        });
-
-        D_Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
-        adapter.notifyDataSetChanged();
-        listView.setAdapter(adapter);
-
-        String name = ((EditText)dialog.findViewById(R.id.editTextChange)).getText().toString();
-
-        textview_answer.setText(name);
 
 
     }
 
     public void solve(View view) {
 
-        TextView textview_answer = (TextView) findViewById(R.id.textView);
+        TextView textview = (TextView) findViewById(R.id.textView);
 
-        SumOfOilsMass SumOfMass = new SumOfOilsMass(OilsList);
-
-        float MassSum = SumOfMass.getSum();
-
-        textview_answer.setText(Float.toString(MassSum));
+        OilsList.clear();
+        DataOils.clear();
+        textview.setText("Сумма: -");
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -175,24 +166,24 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) { return; }
 
-        ArrayAdapter<String> adapterEdit = (ArrayAdapter<String>) listView.getAdapter();
-        adapterEdit.add(data.getStringExtra("floatOil"));
-        adapterEdit.notifyDataSetChanged();
+        TextView textview = (TextView) findViewById(R.id.textView);
 
+        adapter.add(data.getStringExtra("floatOil"));
 
-        StructureOfOils OilRow = new StructureOfOils(data.getStringExtra("floatOil"));
+        Oil OilRow = new Oil(data.getStringExtra("floatOil"));
         OilsList.add(OilRow);
 
 
         OilsTable oilstable = new OilsTable(OilsList);
-        String hit[] = oilstable.getRows();
+        String rows[] = oilstable.getRows();
 
-        for (int i = 0; i < hit.length - 1; i++)
-            if (!hit[i].isEmpty()) DataOils.set(i, hit[i]);
+        for (int i = 0; i < rows.length - 1; i++)
+            if (!rows[i].isEmpty()) DataOils.set(i, rows[i]);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
+        SumOfOilsMass SumOfMass = new SumOfOilsMass(OilsList);
+        textview.setText("Сумма: "+Float.toString(SumOfMass.getSum()));
+
         adapter.notifyDataSetChanged();
-        listView.setAdapter(adapter);
 
     }
 
@@ -201,21 +192,12 @@ public class MainActivity extends Activity {
         super.onSaveInstanceState(saveInstanceState);
 
         TextView myTextView = (TextView)findViewById(R.id.textView);
-        saveInstanceState.putString("ArrayStateKey", myTextView.getText().toString());
-
-        ArrayList<String> saveAdapter = new ArrayList<String>();
         ArrayList<String> SaveData = new ArrayList<String>();
 
-        for (int i = 0; i < adapter.getCount(); i++)
-            saveAdapter.add(adapter.getItem(i));
+        for (int i = 0; i < OilsList.size(); i++) SaveData.add(OilsList.get(i).toString());
 
-
-        for (int i = 0; i < OilsList.size(); i++)
-            SaveData.add(OilsList.get(i).toString());
-
+        saveInstanceState.putString("Sum", myTextView.getText().toString());
         saveInstanceState.putStringArrayList("SaveOilList", SaveData);
-        saveInstanceState.putStringArrayList("SaveTableData",saveAdapter);
-
 
     }
 
@@ -223,16 +205,14 @@ public class MainActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        TextView textview_answer = (TextView) findViewById(R.id.textView);
-
-        String text_answer = savedInstanceState.getString("ArrayStateKey");
-        textview_answer.setText(text_answer);
-
-        DataOils = savedInstanceState.getStringArrayList("SaveTableData");
+        TextView textview = (TextView) findViewById(R.id.textView);
         ArrayList<String> SaveData = savedInstanceState.getStringArrayList("SaveOilList");
+        String text_answer = savedInstanceState.getString("Sum");
+
+
 
         for (int i = 0; i < SaveData.size(); i++) {
-            StructureOfOils OilRow = new StructureOfOils(SaveData.get(i));
+            Oil OilRow = new Oil(SaveData.get(i));
             OilsList.add(OilRow);
         }
 
@@ -240,11 +220,12 @@ public class MainActivity extends Activity {
         String hit[] = oilstable.getRows();
 
         for (int i = 0; i < hit.length - 1; i++)
-            if (!hit[i].isEmpty()) DataOils.set(i, hit[i]);
+            if (!hit[i].isEmpty()) DataOils.add(i, hit[i]);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
+        textview.setText(text_answer);
 
     }
 

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class SumOfOilsMass {
 
-    public ArrayList<StructureOfOils> arrayList = new ArrayList<StructureOfOils>();
+    public ArrayList<Oil> arrayList = new ArrayList<Oil>();
 
-    public SumOfOilsMass(ArrayList<StructureOfOils> arrayList) {
+    public SumOfOilsMass(ArrayList<Oil> arrayList) {
 
         this.arrayList = arrayList;
 

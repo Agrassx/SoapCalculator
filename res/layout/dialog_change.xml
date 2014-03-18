@@ -1,47 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_gravity="center_horizontal">
+              android:orientation="vertical"
+              android:layout_centerVertical="true">
 
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:layout_gravity="center_horizontal">
-
-        <EditText
-                android:id="@+id/editTextChange"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="1dp"
-                android:layout_alignParentStart="false"
-                android:text=""
-                android:hint="Масса">
-            <!--<requestFocus />-->
-        </EditText>
-    </LinearLayout>
-    <LinearLayout
+    <EditText
+            android:id="@+id/editTextChange"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal">
-        <Button
-                android:layout_width="80dip"
-                android:layout_height="40dip"
-                android:id="@+id/Cancel"
-                android:text="Cancel"
-                android:layout_gravity="left"/>
-        <Button
-                android:layout_width="80dip"
-                android:layout_height="40dip"
-                android:id="@+id/Ok"
-                android:text="Ok"
-                android:layout_gravity="right"/>
-    </LinearLayout>
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text=""
+            android:hint="Масса"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            >
+        <!--<requestFocus />-->
+    </EditText>
 
 </LinearLayout>

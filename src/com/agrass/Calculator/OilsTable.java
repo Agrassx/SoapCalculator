@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class OilsTable {
 
-    public ArrayList<StructureOfOils> arrayList = new ArrayList<StructureOfOils>();
+    public ArrayList<Oil> arrayList = new ArrayList<Oil>();
 
-    public OilsTable(ArrayList<StructureOfOils> arrayList) {
+    public OilsTable(ArrayList<Oil> arrayList) {
 
         this.arrayList = arrayList;
 
