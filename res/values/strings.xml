@@ -2,10 +2,10 @@
 <resources>
     <string name="app_name">Calculator</string>
     <string name="app">Calculator</string>
-    <string name="button_add">Добавить</string>
-    <string name="button_solve">Посчитать</string>
+    <string name="answer">Общий вес: -</string>
+    <string name="Clear">Очистить</string>
     <string name="ButtonAdd">Добавить</string>
-    <string name="answer">Answer</string>
+    <string name="button_add">Добавить</string>
 
     <string name="CM_Delete">Удалить</string>
     <string name="CM_ChangeMass">Изменить массу</string>

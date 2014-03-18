@@ -37,12 +37,12 @@ public class DisplayAdditionActivity extends Activity {
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, OilList);
 
-        if (CheckedElements != null)
-            for (int i = 0; i < CheckedElements.length; i++) {
-
-                adapter.remove(CheckedElements[i]);
+        if (CheckedElements != null) {
+            for (String CheckedElement : CheckedElements) {
+                adapter.remove(CheckedElement);
                 adapter.notifyDataSetChanged();
             }
+        }
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -53,8 +53,6 @@ public class DisplayAdditionActivity extends Activity {
 
     public void buttonAdd(View view) {
 
-        Log.e("Add","ButtonAdd Begin");
-
         spinner = (Spinner) findViewById(R.id.spinner);
 
         final Intent intent = new Intent(this, MainActivity.class);
@@ -62,19 +60,14 @@ public class DisplayAdditionActivity extends Activity {
         String valueOfSpinner = spinner.getSelectedItem().toString();
         String StringMass = editTextMass.getText().toString();
 
-        if (StringMass.isEmpty()) makeText(getBaseContext(), "Укажите массу!", LENGTH_LONG).show();
-        else {
-
+        if (StringMass.isEmpty()) {
+            makeText(getBaseContext(), "Укажите массу!", LENGTH_LONG).show();
+        } else {
             String ans = valueOfSpinner + ";" + StringMass;
             intent.putExtra("floatOil", ans);
-
             setResult(RESULT_OK, intent);
             finish();
         }
-
-        Log.e("Add", "ButtonAdd End");
-
-
     }
 
     protected void onSaveInstanceState(Bundle savedInstanceState) {

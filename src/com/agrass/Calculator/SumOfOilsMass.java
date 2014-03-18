@@ -17,7 +17,7 @@ public class SumOfOilsMass {
 
         float sum = 0;
 
-        for (int i = 0; i < arrayList.size(); i++) sum += arrayList.get(i).getMass();
+        for (Oil anArrayList : arrayList) sum += anArrayList.getMass();
 
         return sum;
     }

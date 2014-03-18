@@ -36,8 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:onClick="solve"
-                android:text="@string/button_solve"
+                android:onClick="Clear"
+                android:text="@string/Clear"
                 android:layout_alignParentBottom="true"
                 android:layout_toLeftOf="@+id/Add"/>
 
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="10dip"
                 android:text="@string/answer"
                 android:id="@+id/textView"
                 android:layout_alignParentBottom="true"

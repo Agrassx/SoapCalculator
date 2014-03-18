@@ -2,7 +2,6 @@ package com.agrass.Calculator;
 
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,11 +13,9 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
 
     ListView listView;
-    DialogFragment Dialog;
     public ArrayAdapter<String> adapter;
     public ArrayList<String> DataOils = new ArrayList<String>();
     public ArrayList<Oil> OilsList = new ArrayList<Oil>();
-    public String str = "Rj-rj-rj";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +29,7 @@ public class MainActivity extends Activity {
             registerForContextMenu(listView);
 
         }
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -57,7 +55,6 @@ public class MainActivity extends Activity {
 
             case R.id.CMChangeMass:
                 ChangeOilMass((int) info.id);
-                //Dialog.show(getFragmentManager(), "dlg2");
                 return true;
 
             case R.id.CMAddOil:
@@ -95,56 +92,22 @@ public class MainActivity extends Activity {
 
     public void ChangeOilMass(final int position) {
 
-        //final AlertDialog dialog = DialogFragmentChange.getDialog(this, DialogFragmentChange.IDD_Change);
         final AlertDialog dialog = new DialogFragmentChange().getDialog(this, position);
-        //final dialig2 dlg = new dialig2();
         final TextView textView = (TextView) findViewById(R.id.textView);
 
-
-        //dialog.show();
         dialog.show();
-
-            dialog.getButton(dialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            String NewMass = ((EditText) dialog.findViewById(R.id.editTextChange)).getText().toString();
-            OilsList.get(position).putMassString(NewMass);
-
-            OilsTable com = new OilsTable(OilsList);
-            String MainTable[] = com.getRows();
-
-            DataOils.clear();
-            for (int i = 0; i < MainTable.length - 1; i++) if (!MainTable[i].isEmpty()) DataOils.add(MainTable[i]);
-
-            SumOfOilsMass SumOfMass = new SumOfOilsMass(OilsList);
-            textView.setText("Сумма: " + Float.toString(SumOfMass.getSum()));
-            adapter.notifyDataSetChanged();
-            dialog.dismiss();
-
-        }
-    });
-
-    dialog.getButton(dialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            dialog.dismiss();
-        }
-    });
-
-
-
-
+        SumOfOilsMass SumOfMass = new SumOfOilsMass(OilsList);
+        textView.setText("Общий вес: "+Float.toString(SumOfMass.getSum()));
 
     }
 
-    public void solve(View view) {
+    public void Clear(View view) {
 
         TextView textview = (TextView) findViewById(R.id.textView);
 
         OilsList.clear();
         DataOils.clear();
-        textview.setText("Сумма: -");
+        textview.setText("Общий вес: -");
         adapter.notifyDataSetChanged();
 
     }
@@ -181,7 +144,7 @@ public class MainActivity extends Activity {
             if (!rows[i].isEmpty()) DataOils.set(i, rows[i]);
 
         SumOfOilsMass SumOfMass = new SumOfOilsMass(OilsList);
-        textview.setText("Сумма: "+Float.toString(SumOfMass.getSum()));
+        textview.setText("Общий вес: "+Float.toString(SumOfMass.getSum()));
 
         adapter.notifyDataSetChanged();
 
@@ -194,7 +157,8 @@ public class MainActivity extends Activity {
         TextView myTextView = (TextView)findViewById(R.id.textView);
         ArrayList<String> SaveData = new ArrayList<String>();
 
-        for (int i = 0; i < OilsList.size(); i++) SaveData.add(OilsList.get(i).toString());
+        for (Oil aOilsList : OilsList)
+            SaveData.add(aOilsList.toString());
 
         saveInstanceState.putString("Sum", myTextView.getText().toString());
         saveInstanceState.putStringArrayList("SaveOilList", SaveData);
@@ -210,9 +174,8 @@ public class MainActivity extends Activity {
         String text_answer = savedInstanceState.getString("Sum");
 
 
-
-        for (int i = 0; i < SaveData.size(); i++) {
-            Oil OilRow = new Oil(SaveData.get(i));
+        for (String aSaveData : SaveData) {
+            Oil OilRow = new Oil(aSaveData);
             OilsList.add(OilRow);
         }
 
