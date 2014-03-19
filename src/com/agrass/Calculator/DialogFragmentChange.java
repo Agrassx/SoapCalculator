@@ -16,9 +16,9 @@ public class DialogFragmentChange extends DialogFragment {
             final View view = activity.getLayoutInflater().inflate(R.layout.dialog_change, null); // Получаем layout по его ID
             builder.setView(view);
 
-            builder.setTitle(R.string.Dialog_Title);
+            builder.setTitle(R.string.Dialog_Change_Title);
             final EditText ET = (EditText) view.findViewById(R.id.editTextChange);
-            builder.setPositiveButton(R.string.Dialog_OK, new DialogInterface.OnClickListener() { // Кнопка ОК
+            builder.setPositiveButton(R.string.Dialog_Change_OK, new DialogInterface.OnClickListener() { // Кнопка ОК
                 public void onClick(DialogInterface dialog, int whichButton) {
 
                     String NewMass = ET.getText().toString();
@@ -41,7 +41,7 @@ public class DialogFragmentChange extends DialogFragment {
                 }
             });
 
-                builder.setNegativeButton(R.string.Dialog_Cancel, new DialogInterface.OnClickListener() { // Кнопка Отмена
+                builder.setNegativeButton(R.string.Dialog_Change_Cancel, new DialogInterface.OnClickListener() { // Кнопка Отмена
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
@@ -50,4 +50,5 @@ public class DialogFragmentChange extends DialogFragment {
                builder.setCancelable(true);
                return builder.create();
     }
+
 }

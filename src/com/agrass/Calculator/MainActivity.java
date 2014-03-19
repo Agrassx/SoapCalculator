@@ -101,7 +101,6 @@ public class MainActivity extends Activity {
 
         final AlertDialog dialog = new DialogFragmentChange().getDialog(this, position);
         final TextView textView = (TextView) findViewById(R.id.textView);
-
         dialog.show();
         SumOfOilsMass SumOfMass = new SumOfOilsMass(OilsList);
         textView.setText("Общий вес: "+Float.toString(SumOfMass.getSum()));
@@ -110,12 +109,16 @@ public class MainActivity extends Activity {
 
     public void Clear(View view) {
 
-        TextView textview = (TextView) findViewById(R.id.textView);
-
-        OilsList.clear();
-        DataOils.clear();
-        textview.setText("Общий вес: -");
-        adapter.notifyDataSetChanged();
+//        TextView textview = (TextView) findViewById(R.id.textView);
+//
+//        OilsList.clear();
+//        DataOils.clear();
+//        textview.setText("Общий вес: -");
+//        adapter.notifyDataSetChanged();
+        AlertDialog dialog = new DialogYouAreSure().getDialog(this);
+        if (!adapter.isEmpty()) {
+            dialog.show();
+        }
 
     }
 

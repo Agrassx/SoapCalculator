@@ -9,11 +9,9 @@
     <ListView
             android:id="@+id/listView1"
             android:layout_width="fill_parent"
-            android:layout_height="50dip"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="false"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="false"
-            android:layout_weight="0.92">
+            android:layout_weight="0.95">
 
     </ListView>
 
@@ -21,14 +19,14 @@
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
-                  android:layout_marginTop="15dp">
+                  android:layout_marginTop="15dp"
+                  android:gravity="bottom">
         <Button
                 android:id="@+id/Add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="add"
                 android:text="@string/button_add"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"/>
 
         <Button
@@ -37,9 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:onClick="Clear"
-                android:text="@string/Clear"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/Add"/>
+                android:text="@string/Clear"/>
 
         <TextView
                 android:layout_width="wrap_content"
@@ -48,8 +44,8 @@
                 android:layout_marginLeft="10dip"
                 android:text="@string/answer"
                 android:id="@+id/textView"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"/>
+                android:autoText="true"
+                android:textSize="16dip"/>
 
     </LinearLayout>
 

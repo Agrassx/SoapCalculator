@@ -11,8 +11,13 @@
     <string name="CM_ChangeMass">Изменить массу</string>
     <string name="CM_AddOil">Добавить</string>
 
-    <string name="Dialog_Title">Изменить</string>
-    <string name="Dialog_Cancel">Отмена</string>
-    <string name="Dialog_OK">ОК</string>
+    <string name="Dialog_Change_Title">Изменить</string>
+    <string name="Dialog_Change_Cancel">Отмена</string>
+    <string name="Dialog_Change_OK">ОК</string>
+
+    <string name="Dialog_Sure_Title">Очистить</string>
+    <string name="Dialog_Sure_Clear">Очистить</string>
+    <string name="Dialog_Sure_Cancel">Отмена</string>
+    <string name="Dialog_Sure_Message">Вы уверены что хотите очистить список?</string>
 
 </resources>
