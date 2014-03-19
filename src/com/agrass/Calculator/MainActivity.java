@@ -75,6 +75,8 @@ public class MainActivity extends Activity {
 
     public void deleteItem(int position) {
 
+        final TextView textView = (TextView) findViewById(R.id.textView);
+
         OilsList.remove(position);
 
         OilsTable com = new OilsTable(OilsList);
@@ -82,11 +84,16 @@ public class MainActivity extends Activity {
 
         DataOils.clear();
 
-        for (int i = 0; i < MainTable.length - 1; i++) if (!MainTable[i].isEmpty()) DataOils.add(MainTable[i]);
+        for (int i = 0; i < MainTable.length - 1; i++)
+            if (!MainTable[i].isEmpty())
+                DataOils.add(MainTable[i]);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, DataOils);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
+
+        SumOfOilsMass SumOfMass = new SumOfOilsMass(OilsList);
+        textView.setText("Общий вес: "+Float.toString(SumOfMass.getSum()));
 
     }
 
@@ -113,14 +120,18 @@ public class MainActivity extends Activity {
     }
 
     public void add(View view) {
+
         Intent intent = new Intent(this, DisplayAdditionActivity.class);
 
         CheckOilTableElements CheckOilElements = new CheckOilTableElements(OilsList);
         String[] CheckedElements = CheckOilElements.getStringArray();
 
-        if (!adapter.isEmpty()) intent.putExtra("CheckElements", CheckedElements);
-
-        startActivityForResult(intent, 1);
+        if (!adapter.isEmpty()) {
+            intent.putExtra("CheckElements", CheckedElements);
+        }
+        if (CheckedElements.length < 7) {
+            startActivityForResult(intent, 1);
+        }
 
     }
 
