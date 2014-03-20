@@ -4,13 +4,13 @@ public class Oil {
     String Name;
     float Mass;
 
-    public void putMassString(String Mass) {
+    public void putMass(String Mass) {
 
         this.Mass = Float.valueOf(Mass);
 
     }
 
-    public void putMassFloat(Float Mass) {
+    public void putMass(Float Mass) {
 
         this.Mass = Mass;
 

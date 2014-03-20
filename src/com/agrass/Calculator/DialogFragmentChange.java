@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
 public class DialogFragmentChange extends DialogFragment {
 
     public AlertDialog getDialog(final MainActivity activity, final int Position) {
@@ -18,26 +19,32 @@ public class DialogFragmentChange extends DialogFragment {
 
             builder.setTitle(R.string.Dialog_Change_Title);
             final EditText ET = (EditText) view.findViewById(R.id.editTextChange);
+            ET.setText(String.valueOf(activity.OilsList.get(Position).getMass()));
+            ET.selectAll();
             builder.setPositiveButton(R.string.Dialog_Change_OK, new DialogInterface.OnClickListener() { // Кнопка ОК
                 public void onClick(DialogInterface dialog, int whichButton) {
 
                     String NewMass = ET.getText().toString();
-                    activity.OilsList.get(Position).putMassString(NewMass);
+                    if (NewMass.isEmpty()) {
+                        dialog.dismiss();
+                    } else {
+                        activity.OilsList.get(Position).putMass(NewMass);
 
-                    OilsTable com = new OilsTable(activity.OilsList);
-                    String MainTable[] = com.getRows();
+                        OilsTable com = new OilsTable(activity.OilsList);
+                        String MainTable[] = com.getRows();
 
-                    activity.DataOils.clear();
-                    for (int i = 0; i < MainTable.length - 1; i++) {
-                        if (!MainTable[i].isEmpty()) {
-                            activity.DataOils.add(MainTable[i]);
+                        activity.DataOils.clear();
+                        for (int i = 0; i < MainTable.length - 1; i++) {
+                            if (!MainTable[i].isEmpty()) {
+                                activity.DataOils.add(MainTable[i]);
+                            }
                         }
+                        activity.adapter.notifyDataSetChanged();
+                        TextView text = (TextView) activity.findViewById(R.id.textView);
+                        SumOfOilsMass SumOfMass = new SumOfOilsMass(activity.OilsList);
+                        text.setText("Общий вес: " + Float.toString(SumOfMass.getSum()));
+                        dialog.dismiss();
                     }
-                    activity.adapter.notifyDataSetChanged();
-                    TextView text = (TextView) activity.findViewById(R.id.textView);
-                    SumOfOilsMass SumOfMass = new SumOfOilsMass(activity.OilsList);
-                    text.setText("Общий вес: "+Float.toString(SumOfMass.getSum()));
-                    dialog.dismiss();
                 }
             });
 

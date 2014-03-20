@@ -15,9 +15,9 @@
             android:text=""
             android:hint="Масса"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            >
-        <!--<requestFocus />-->
+            android:layout_gravity="center_vertical">
+        <requestFocus />
+
     </EditText>
 
 </LinearLayout>

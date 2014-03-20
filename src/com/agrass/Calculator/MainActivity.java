@@ -109,12 +109,6 @@ public class MainActivity extends Activity {
 
     public void Clear(View view) {
 
-//        TextView textview = (TextView) findViewById(R.id.textView);
-//
-//        OilsList.clear();
-//        DataOils.clear();
-//        textview.setText("Общий вес: -");
-//        adapter.notifyDataSetChanged();
         AlertDialog dialog = new DialogYouAreSure().getDialog(this);
         if (!adapter.isEmpty()) {
             dialog.show();
